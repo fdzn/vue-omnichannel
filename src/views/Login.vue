@@ -43,7 +43,7 @@
         <button class="btn btn-blue btn-lg btn-block">Sign in</button>
         <hr />
       </form>
-        <button class="btn btn-blue btn-lg btn-block" @click="getData">GETDATA</button>
+        <!-- <button class="btn btn-blue btn-lg btn-block" @click="getData">GETDATA</button> -->
       <!-- ./ form -->
     </div>
   </div>
@@ -66,9 +66,9 @@ export default {
 
       await this.$store.dispatch("login", actionPayload);
     },
-    getData(){
-      this.$store.dispatch("checkLogin");
-    }
+    // getData(){
+    //   this.$store.dispatch("checkLogin");
+    // }
   },
 };
 </script>
