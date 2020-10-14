@@ -5,5 +5,9 @@ export default {
 
   token(state) {
     return state.token;
-  }
+  },
+
+  isLogin(state) {
+    return state.isLogin;
+  },
 };
