@@ -13,9 +13,9 @@
           </a>
         </li>
         <li>
-          <a data-navigation-target="chats" class="active" href="">
+          <router-link :to="{ name: 'Workspace' }">
             <i class="conversation_icon"></i>
-          </a>
+          </router-link>
         </li>
         <li>
           <a data-navigation-target="chat_agent" href="javascript:nav_agent()"
