@@ -2,16 +2,23 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
-
+import Workspace from "../views/Workspace.vue";
 import store from "../store";
-Vue.use(VueRouter);
+
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
-    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'workspace',
+        name: 'Workspace',
+        component: Workspace
+      }
+    ]
   },
   {
     path: "/login",
@@ -22,7 +29,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  linkExactActiveClass: 'active',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });
