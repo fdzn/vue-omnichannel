@@ -50,7 +50,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      if (responseData.status == 401) {
+      if (responseData.statusCode == 401) {
         context.dispatch("resetCookies");
         return;
       } else {
@@ -82,7 +82,7 @@ export default {
       const responseData = await response.json();
 
       if (!response.ok) {
-        if (responseData.status == 401) {
+        if (responseData.statusCode == 401) {
           context.dispatch("resetCookies");
           return;
         } else {
