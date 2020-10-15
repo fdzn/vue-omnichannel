@@ -4,22 +4,43 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Workspace from "../views/Workspace.vue";
 import store from "../store";
+import socketIO from "socket.io-client";
+import VueSocketIO from "vue-socket.io";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: "/",
+    name: "Home",
     component: Home,
     meta: { requiresAuth: true },
+    beforeEnter(to, from, next) {
+      Vue.use(
+        new VueSocketIO({
+          debug: true,
+          connection: socketIO(
+            `${process.env.VUE_APP_URL_SOCKET}?username=${store.getters.username}&level=${store.getters.level}&groupId=${store.getters.groupId}`,
+            {
+              transports: ["websocket"],
+            }
+          ),
+          vuex: {
+            store,
+            actionPrefix: "SOCKET_",
+            mutationPrefix: "SOCKET_",
+          },
+        })
+      );
+      next();
+    },
     children: [
       {
-        path: 'workspace',
-        name: 'Workspace',
-        component: Workspace
-      }
-    ]
+        path: "workspace",
+        name: "Workspace",
+        component: Workspace,
+      },
+    ],
   },
   {
     path: "/login",
@@ -30,8 +51,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  linkExactActiveClass: 'active',
-  mode: 'history',
+  linkExactActiveClass: "active",
+  mode: "history",
   base: process.env.BASE_URL,
   routes,
 });

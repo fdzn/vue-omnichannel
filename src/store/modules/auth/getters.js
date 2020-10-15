@@ -3,6 +3,14 @@ export default {
     return state.username;
   },
 
+  groupId(state) {
+    return state.groupId;
+  },
+
+  level(state) {
+    return state.level;
+  },
+
   token(state) {
     return state.token;
   },
