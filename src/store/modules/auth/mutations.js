@@ -1,8 +1,12 @@
 export default {
   setUser(state, payload) {
-    state.token = payload.token;
     state.username = payload.username;
-    state.tokenExpiration = payload.tokenExpiration;
+    state.level = payload.level;
+    state.unitId = payload.unitId;
+    state.groupId = payload.groupId;
+    state.token = payload.token;
+    state.exp = payload.exp;
+    state.iat = payload.iat;
     state.isLogin = true;
   },
 

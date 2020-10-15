@@ -18,15 +18,12 @@ export default {
     this.$store.dispatch("checkLogin");
   },
   watch: {
-    isLogin(curValue) {
-      if (curValue) {
+    isLogin(curValue, oldValue) {
+      if (curValue && curValue !== oldValue) {
         this.$router.replace("/");
       } else {
         this.$router.replace("/login");
       }
-      // if (curValue && curValue !== oldValue) {
-      //   this.$router.replace("/coaches");
-      // }
     },
   },
 };
