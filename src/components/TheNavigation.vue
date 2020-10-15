@@ -3,9 +3,9 @@
     <div class="nav-group">
       <ul>
         <li>
-          <a class="logo" href="#">
+          <router-link :to="{ name: 'Home' }">
             <i class="logo_chat_icon"></i>
-          </a>
+          </router-link>
         </li>
         <li>
           <a data-navigation-target="#" href="#">
