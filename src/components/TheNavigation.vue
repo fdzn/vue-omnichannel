@@ -3,9 +3,9 @@
     <div class="nav-group">
       <ul>
         <li>
-          <a class="logo" href="#">
+          <router-link :to="{ name: 'Home' }">
             <i class="logo_chat_icon"></i>
-          </a>
+          </router-link>
         </li>
         <li>
           <a data-navigation-target="#" href="#">
@@ -13,9 +13,9 @@
           </a>
         </li>
         <li>
-          <a data-navigation-target="chats" class="active" href="">
+          <router-link :to="{ name: 'Workspace' }">
             <i class="conversation_icon"></i>
-          </a>
+          </router-link>
         </li>
         <li>
           <a data-navigation-target="chat_agent" href="javascript:nav_agent()"
