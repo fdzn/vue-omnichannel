@@ -20914,6 +20914,111 @@ body:not(.no-blur-effect) .modal.show .modal-dialog.modal-dialog-zoom {
     margin: 0 20px
 }
 
+nav.navigation {
+    /* background: #fff */
+    background: #3A7094;
+}
+
+nav.navigation .nav-group {
+    width: 70px
+}
+
+nav.navigation ul {
+    height: 100vh;
+    height: -webkit-calc(var(--vh, 1vh) * 100);
+    height: -moz-calc(var(--vh, 1vh) * 100);
+    height: calc(var(--vh, 1vh) * 100);
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding: 0;
+    margin: 0
+}
+
+nav.navigation ul li {
+    list-style: none
+}
+
+nav.navigation ul li a {
+    display: block;
+    text-align: center;
+    padding: 6px 0;
+    color: #828282;
+    position: relative;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+nav.navigation ul li a.notifiy_badge:before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #ff7373;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 10px
+}
+
+nav.navigation ul li a.active {
+    /* color: #3db16b */
+    color: #FBCE0A;
+    border-left: 3px solid #FBCE0A;
+}
+
+nav.navigation ul li a.logo {
+    margin-bottom: 1rem;
+    background-color: #FBCE0A;;
+}
+
+nav.navigation ul li a.logo svg path {
+    fill: rgba(255, 255, 255, .7)
+}
+
+nav.navigation ul li a.logo svg circle {
+    fill: rgba(255, 255, 255, .7)
+}
+
+nav.navigation ul li a.logo i {
+    font-size: 26px
+}
+
+nav.navigation ul li a.logo:focus,
+nav.navigation ul li a.logo:hover {
+    background-color: #fff
+}
+
+nav.navigation ul li a:focus,
+nav.navigation ul li a:hover {
+    color: #040505
+}
+
+nav.navigation ul li a i {
+    font-size: 19px
+}
+
+nav.navigation ul li.brackets {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1
+}
+
 body.rtl {
     direction: rtl
 }
@@ -21317,69 +21422,6 @@ body.dark figure.avatar.avatar-state-secondary:before,
 body.dark figure.avatar.avatar-state-success:before,
 body.dark figure.avatar.avatar-state-warning:before {
     border-color: #464852
-}
-
-body.form-membership {
-    /* background: url(../media/img/bg.png) #fff; */
-    background-attachment: fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    padding: 3rem 0
-}
-
-body.form-membership .form-wrapper {
-    background-color: #fff;
-    padding: 3rem;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 10px;
-    width: 430px;
-    margin: 50px auto;
-    text-align: center;
-    box-shadow: 0px 4px 6px #888888;
-}
-
-body.form-membership .form-wrapper .logo {
-    background-color: #fff;
-    width: 100px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    height: 100px;
-    text-align: center;
-    margin-bottom: 2rem;
-    margin-top: -100px;
-    margin-left: auto;
-    margin-right: auto
-}
-
-body.form-membership .form-wrapper h5 {
-    text-align: center;
-    margin-bottom: 2rem
-}
-
-body.form-membership .form-wrapper form .form-control {
-    margin-bottom: 1.5rem
-}
-
-body.form-membership .form-wrapper hr {
-    margin: 2rem 0
 }
 
 .form-membership {
@@ -22223,14 +22265,7 @@ body.form-membership .form-wrapper hr {
 
 .p0{
     padding:0px !important;
-}
-.icon-speaker{
-    /* background: url('../../img/speaker.svg'); */
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    min-height: 50px;
-}
+} 
 
 .card-journey{
     margin: 10px;
