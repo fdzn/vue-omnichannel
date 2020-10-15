@@ -4,6 +4,12 @@ import router from "./router";
 import store from "./store";
 // import socketio from "socket.io";
 import VueSocketIO from "vue-socket.io";
+
+// CSS
+// <!-- Soho css -->
+import "./assets/dist/css/soho.min.css";
+import "./assets/dist/css/app.css";
+import "./assets/dist/css/custom.css";
 Vue.config.productionTip = false;
 
 //SOCKET
