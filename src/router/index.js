@@ -18,7 +18,8 @@ const routes = [
         name: 'Workspace',
         component: Workspace
       }
-    ]
+    ],
+    meta: { requiresAuth: true },
   },
   {
     path: "/login",
@@ -35,7 +36,7 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach(function(to, from, next) {
+router.beforeEach(function (to, from, next) {
   if (to.meta.requiresAuth && !store.getters.isLogin) {
     next("/login");
   } else if (to.meta.requiresUnauth && store.getters.isLogin) {
