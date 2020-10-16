@@ -19,7 +19,7 @@ const routes = [
         component: Workspace
       }
     ],
-    meta: { requiresAuth: true },
+    meta: { requiresUnauth: true },
   },
   {
     path: "/login",

@@ -1,14 +1,14 @@
 <template>
   <div class="content">
-    <sidebar></sidebar>
+    <left-sidebar></left-sidebar>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Sidebar from "@/components/Workspace/Sidebar.vue";
+import LeftSidebar from "@/components/Workspace/LeftSidebar.vue";
 
 export default {
-  components: { Sidebar }
+  components: { "left-sidebar": LeftSidebar }
 };
 </script>

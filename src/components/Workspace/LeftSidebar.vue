@@ -16,12 +16,6 @@
         </button>
       </div>
       <component :is="currentTabComponent" class="tab"></component>
-
-      <!-- <queue-chat v-if="activeTab === 'chat'"></queue-chat>
-
-      <queue-call v-else-if="activeTab === 'call'"></queue-call>
-
-      <queue-video v-else-if="activeTab === 'video'"></queue-video> -->
     </div>
     <!-- ./ Chats sidebar -->
   </div>
