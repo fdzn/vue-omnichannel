@@ -43,8 +43,8 @@
             class="form-control h-form"
             id="validationCustomUsername"
             placeholder="Password"
-            aria-describedby="inputGroupPrepend"
-            required
+            autocomplete="off"
+            v-model.trim="password"
           />
           <span class="hide_position"><i class="hide_pass_icon"></i></span>
           <div class="invalid-feedback">
