@@ -92,8 +92,9 @@ export default {
   },
 
   resetCookies(context) {
-    Cookies.remove();
-    context.commit("setLogoutState");
+    console.log(context)
+    // Cookies.remove();
+    // context.commit("setLogoutState");
   },
 
   checkLogin(context) {
