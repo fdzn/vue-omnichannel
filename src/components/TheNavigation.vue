@@ -19,13 +19,13 @@
         </li>
         <li>
           <a data-navigation-target="chat_agent" href="javascript:nav_agent()"
-            ><i class="material-icons text-white" style="font-size: 24px;"
+            ><i class="material-icons text-white" style="font-size: 24px"
               >group</i
             ></a
           >
         </li>
-        <li style="margin-top: 37.5em;">
-          <a href="./login.html">
+        <li style="margin-top: 37.5em">
+          <a href="javascript:void(0)" @click="logout">
             <i class="ti-power-off text-white"></i>
           </a>
         </li>
@@ -33,6 +33,16 @@
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+  methods: {
+    async logout() {
+      await this.$store.dispatch("logout");
+    },
+  },
+};
+</script>
 
 <style scoped>
 nav.navigation {

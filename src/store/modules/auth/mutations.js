@@ -11,9 +11,13 @@ export default {
   },
 
   setLogoutState(state) {
-    state.token = null;
     state.username = null;
-    state.tokenExpiration = null;
+    state.level = null;
+    state.unitId = null;
+    state.groupId = null;
+    state.token = null;
+    state.exp = null;
+    state.iat = null;
     state.isLogin = false;
   },
 };

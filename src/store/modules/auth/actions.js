@@ -26,29 +26,31 @@ export default {
   },
 
   async logout(context) {
-    const token = Cookies.get("token");
-    const url = `${process.env.VUE_APP_URL_BACKEND}/auth/logout`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      if (responseData.statusCode == 401) {
-        context.dispatch("resetCookies");
-        return;
-      } else {
-        console.log(responseData);
-        return responseData;
+    const token = context.state.token;
+    console.log(token);
+    if (token) {
+      const url = `${process.env.VUE_APP_URL_BACKEND}/auth/logout`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        if (responseData.statusCode == 401) {
+          context.dispatch("resetCookies");
+          return;
+        } else {
+          console.log(responseData);
+          return responseData;
+        }
       }
+      context.dispatch("resetCookies");
+    } else {
+      context.dispatch("resetCookies");
     }
-
-    context.dispatch("resetCookies");
   },
 
   async setCookies(context, token) {
