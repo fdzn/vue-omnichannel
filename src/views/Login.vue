@@ -12,7 +12,7 @@
         Please enter your username and password
       </h6>
       <!-- form -->
-      <form>
+      <form @submit.prevent="login">
         <div class="input-group">
           <div class="input-group-prepend h-42">
             <span class="input-group-text" id="inputGroupPrepend"
@@ -26,6 +26,7 @@
             placeholder="Username or Email"
             aria-describedby="inputGroupPrepend"
             required
+            v-model.trim="username"
           />
           <div class="invalid-feedback">
             Please choose a username.
@@ -64,7 +65,7 @@
             >
           </div>
         </div>
-        <button class="btn btn-blue btn-lg btn-block">Sign in</button>
+        <button class="btn btn-blue btn-lg btn-block btn-signin">Sign in</button>
         <hr />
       </form>
       <!-- ./ form -->
