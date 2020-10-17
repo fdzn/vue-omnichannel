@@ -92,7 +92,12 @@ export default {
   },
 
   resetCookies(context) {
-    Cookies.remove();
+    const data = Cookies.get()
+
+    for (const [key] of Object.entries(data)) {
+      Cookies.remove(key);
+    }
+
     context.commit("setLogoutState");
   },
 
