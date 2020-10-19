@@ -22,11 +22,11 @@
       </div>
       <div class="chat-header-action">
         <ul class="list-inline">
-          <li class="list-inline-item" style="margin-top:4px !important;">
+          <li class="list-inline-item" style="margin-top: 4px !important">
             <a
               href="#"
               class="btn btn-sm btn-red font11"
-              style="border-radius: 20px; padding: 5px 20px;"
+              style="border-radius: 20px; padding: 5px 20px"
             >
               End Chat
             </a>
@@ -34,98 +34,21 @@
         </ul>
       </div>
     </div>
-    <div
-      class="chat-body"
-      tabindex="1"
-      style="overflow: hidden; outline: none;"
-    >
+    <div class="chat-body" tabindex="1" style="overflow: hidden; outline: none">
       <div class="box-detail-date">
         <h6 class="text-detail-date">Today</h6>
       </div>
       <div class="messages">
-        <div class="d-flex flex-row">
-          <div>
-            <figure class="avatar">
-              <span class="avatar-title bg-pink rounded-circle">NF</span>
-            </figure>
-          </div>
-          <div class="ml-2">
-            <div class="message-item">
-              <div class="message-content">
-                Selamat pagi min, saya ingin bertanya perihal pengembalian
-                barang itu bisa kapan ya?
-                <div class="message-action">
-                  20/09/2020 11:30
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="d-flex flex-row mt-1">
-          <div>
-            <figure class="avatar">
-              <span class="avatar-title bg-pink rounded-circle">NF</span>
-            </figure>
-          </div>
-          <div class="ml-2">
-            <div class="message-item">
-              <div class="message-content">
-                Refund nya juga min bagaimana?
-                <div class="message-action">
-                  20/09/2020 11:30
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="message-item outgoing-message">
-          <div class="message-content">
-            Selamat pagi bu
-            <div class="message-action text-white">
-              20/09/2020 11:30
-            </div>
-          </div>
-        </div>
-        <div class="d-flex flex-row mt-1">
-          <div>
-            <figure class="avatar">
-              <span class="avatar-title bg-pink rounded-circle">NF</span>
-            </figure>
-          </div>
-          <div class="ml-2">
-            <div class="message-item" style="max-width: 100%">
-              <div class="message-content message-file">
-                <div class="file-icon">
-                  <i class="file_bg_icon"></i>
-                </div>
-                <div>
-                  <div>style.zip</div>
-                  <h6 style="font-size:14px; font-weight:600;">41.36 Mb</h6>
-                  <div class="message-action">
-                    20/09/2020 11:30
-                  </div>
-                </div>
-                <div class="file-icon">
-                  <i class="download_icon"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="message-item outgoing-message">
-          <div class="message-content">
-            Terimakasih telah menghubungi kami
-            <div class="message-action text-white">
-              20/09/2020 11:30
-            </div>
-          </div>
-        </div>
-        <div class="message-item ">
-          <div class="message-content">Lorem ipsum dolor sit amet.</div>
-          <div class="message-action">PM 14:25</div>
-        </div>
+        <bubble-chat
+          v-for="chatMessage in chatMessages"
+          :key="`${sessionId}:${chatMessage.id}`"
+          :name="chatMessage.name"
+          :message="chatMessage.message"
+          :media="chatMessage.media"
+          :actionType="chatMessage.actionType"
+          :messageDate="chatMessage.messageDate"
+          :isMedia="chatMessage.isMedia"
+        />
       </div>
     </div>
     <div class="chat-footer">
@@ -151,12 +74,46 @@
 </template>
 
 <script>
+import BubbleChat from "./BubbleChat";
 export default {
   props: {
     sessionId: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+    channelId: {
+      type: String,
+      required: true,
+      default: "whatsapp",
+    },
+  },
+  data() {
+    return {
+      chatMessages: this.$store.getters["workspace/chatMessage"](
+        this.sessionId
+      ),
+    };
+  },
+  mounted() {
+    console.log("MOUNT");
+    this.$store.dispatch("workspace/getInteraction", this);
+  },
+  computed: {
+    chatMessagesComputed() {
+      console.log(
+        "Computed",
+        this.$store.getters["workspace/chatMessage"](this.sessionId)
+      );
+      return this.$store.getters["workspace/chatMessage"](this.sessionId);
+    },
+  },
+  watch: {
+    chatMessagesComputed(curValue) {
+      this.chatMessages = curValue;
+    },
+  },
+  components: {
+    "bubble-chat": BubbleChat,
+  },
 };
 </script>

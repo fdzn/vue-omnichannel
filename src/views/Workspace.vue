@@ -48,7 +48,6 @@ export default {
   },
   watch: {
     queuesChatComputed(curValue) {
-      console.log("WATCH", curValue);
       this.queues.chat = curValue;
     },
     queuesVideoComputed(curValue) {

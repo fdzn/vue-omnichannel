@@ -6,9 +6,10 @@ export default {
   namespaced: true,
   state() {
     return {
-      queuesChat:[],
-      queuesVideo:[],
-      queuesCall:[],
+      queuesChat: [],
+      queuesVideo: [],
+      queuesCall: [],
+      chatMessages: {},
     };
   },
   mutations,

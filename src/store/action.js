@@ -3,13 +3,14 @@ export default {
     console.log("SOCKET_newInteractionWhatsapp");
     console.log("state", context);
     console.log("message", message);
+    context.commit("workspace/addChatMessage", message);
   },
   SOCKET_countQueue(context, message) {
     console.log("SOCKET_countQueue");
     console.log("state", context);
     console.log("message", message);
   },
-  
+
   SOCKET_newQueue(context, message) {
     console.log("SOCKET_newQueue");
     console.log("state", context);
@@ -25,7 +26,7 @@ export default {
 
     switch (message.channelId) {
       case "whatsapp":
-        context.commit("addQueuesChat", data);
+        context.commit("workspace/addQueuesChat", data);
         break;
 
       default:

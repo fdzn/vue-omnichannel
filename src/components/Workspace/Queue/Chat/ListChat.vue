@@ -2,7 +2,7 @@
   <router-link
     :to="{
       name: 'InteractionChat',
-      params: { sessionId: sessionId },
+      params: { sessionId: sessionId, channelId: 'whatsapp' },
     }"
   >
     <li

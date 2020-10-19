@@ -43,7 +43,7 @@ const routes = [
         component: Workspace,
         children: [
           {
-            path: "chat/:sessionId",
+            path: "chat/:channelId/:sessionId",
             name: "InteractionChat",
             component: InteractionChat,
             props: true,
