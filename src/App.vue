@@ -19,7 +19,6 @@ export default {
   },
   watch: {
     isLogin(curValue) {
-      console.log("ISLOGIN",curValue)
       if(curValue){
         this.$router.replace("/");
       }else{

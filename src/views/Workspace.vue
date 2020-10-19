@@ -32,7 +32,6 @@ export default {
     };
   },
   mounted() {
-    console.log("mounted");
     this.$store.dispatch("workspace/getQueues", "whatsapp");
   },
   computed: {

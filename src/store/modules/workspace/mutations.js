@@ -1,3 +1,6 @@
+
+// import Vue from "vue";
+
 export default {
   initialQueuesChat(state, payload) {
     const data = payload.map((row) => {
@@ -32,6 +35,8 @@ export default {
       return {
         id: row.id,
         name: row.fromName ? row.fromName : row.from,
+        from: row.from,
+        convId: row.convId,
         message: row.message,
         media: row.media,
         actionType: row.actionType,
@@ -39,12 +44,19 @@ export default {
         isMedia: row.media ? true : false,
       };
     });
-    state.chatMessages[payload[0].sessionId] = data;
+
+    const sessionId = payload[0].sessionId;
+    let newObject = {}
+    newObject[sessionId] = data
+    // Vue.set(state.chatMessages, sessionId, data)
+    state.chatMessages = { ...state.chatMessages, ...newObject };
   },
   addChatMessage(state, payload) {
     const data = {
       id: payload.id,
       name: payload.fromName ? payload.fromName : payload.from,
+      from: payload.from,
+      convId: payload.convId,
       message: payload.message,
       media: payload.media,
       actionType: payload.actionType,

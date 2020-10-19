@@ -1,20 +1,17 @@
 export default {
   SOCKET_newInteractionWhatsapp(context, message) {
-    console.log("SOCKET_newInteractionWhatsapp");
-    console.log("state", context);
-    console.log("message", message);
+    console.log("SOCKET_newInteractionWhatsapp", message);
     context.commit("workspace/addChatMessage", message);
   },
+  SOCKET_updateStatusMessage(context, message) {
+    console.log("SOCKET_updateStatusMessage", message);
+  },
   SOCKET_countQueue(context, message) {
-    console.log("SOCKET_countQueue");
-    console.log("state", context);
-    console.log("message", message);
+    console.log("SOCKET_countQueue", message);
   },
 
   SOCKET_newQueue(context, message) {
-    console.log("SOCKET_newQueue");
-    console.log("state", context);
-    console.log("message", message);
+    console.log("SOCKET_newQueue", message);
 
     const data = {
       sessionId: message.sessionId,

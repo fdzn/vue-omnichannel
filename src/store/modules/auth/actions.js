@@ -42,7 +42,6 @@ export default {
           context.dispatch("resetCookies");
           return;
         } else {
-          console.log(responseData);
           return responseData;
         }
       }

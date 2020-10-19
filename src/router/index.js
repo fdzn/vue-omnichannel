@@ -41,11 +41,13 @@ const routes = [
         path: "workspace",
         name: "Workspace",
         component: Workspace,
+        meta: { requiresAuth: true },
         children: [
           {
             path: "chat/:channelId/:sessionId",
             name: "InteractionChat",
             component: InteractionChat,
+            meta: { requiresAuth: true },
             props: true,
           },
         ],
@@ -68,7 +70,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach(function(to, from, next) {
-  console.log("STORE", store.getters["auth/isLogin"]);
   if (to.meta.requiresAuth && !store.getters["auth/isLogin"]) {
     next("/login");
   } else if (to.meta.requiresUnauth && store.getters["auth/isLogin"]) {

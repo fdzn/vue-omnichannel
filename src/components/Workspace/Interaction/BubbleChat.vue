@@ -81,7 +81,6 @@ export default {
   methods: {
     avatarName(name) {
       const str = name;
-      console.log("str", str);
       const matches = str.match(/\b(\w)/g); // ['J','S','O','N']
       if (matches) {
         return matches.join("");

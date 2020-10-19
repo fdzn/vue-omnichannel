@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="chat-footer">
-      <form action="">
+      <form @submit.prevent="sendMessage">
         <!-- <button class="btn btn-light btn-floating" type="button"> -->
         <i class="paperclip_icon"></i>
         <!-- </button> -->
@@ -62,6 +62,7 @@
           placeholder="Type your message here......"
           aria-label="Recipient's username"
           aria-describedby="button-addon2"
+          v-model.trim="message"
         />
         <div class="form-buttons">
           <button class="btn btn-primary btn-floating" type="submit">
@@ -92,24 +93,52 @@ export default {
       chatMessages: this.$store.getters["workspace/chatMessage"](
         this.sessionId
       ),
+      message: "",
     };
   },
   mounted() {
-    console.log("MOUNT");
     this.$store.dispatch("workspace/getInteraction", this);
   },
   computed: {
     chatMessagesComputed() {
-      console.log(
-        "Computed",
-        this.$store.getters["workspace/chatMessage"](this.sessionId)
-      );
-      return this.$store.getters["workspace/chatMessage"](this.sessionId);
+      const data = this.$store.getters["workspace/chatMessage"](this.sessionId);
+      return data;
     },
   },
   watch: {
     chatMessagesComputed(curValue) {
       this.chatMessages = curValue;
+    },
+  },
+  methods: {
+    async sendMessage() {
+      if (this.message == "") {
+        return "ERROR";
+      }
+      if (this.channelId == "whatsapp") {
+        let { convId, from, fromName } = this.chatMessages[
+          this.chatMessages.length - 1
+        ];
+        const data = {
+          sessionId: this.sessionId,
+          from: from,
+          fromName: fromName,
+          convId: convId,
+          message: this.message,
+          media: null,
+        };
+
+        const result = await this.$store.dispatch(
+          "workspace/sendMessageWhatsapp",
+          data
+        );
+
+        if (result.isError) {
+          console.error(result.data);
+        } else {
+          this.message = "";
+        }
+      }
     },
   },
   components: {

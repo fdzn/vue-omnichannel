@@ -68,7 +68,6 @@ export default {
   },
   computed: {
     avatarColor() {
-      console.log("hai");
       const colorsets = [
         "bg-pink",
         "bg-blue",
@@ -92,7 +91,6 @@ export default {
   methods: {
     avatarName(name) {
       const str = name;
-      console.log("str", str);
       const matches = str.match(/\b(\w)/g); // ['J','S','O','N']
       if (matches) {
         return matches.join("");
