@@ -12,7 +12,7 @@ export default {
   computed: {
     isLogin() {
       return this.$store.getters.isLogin;
-    },
+    }
   },
   created() {
     this.$store.dispatch("checkLogin");
@@ -24,7 +24,13 @@ export default {
       } else {
         this.$router.replace("/login");
       }
-    },
-  },
+    }
+  }
 };
 </script>
+
+<style>
+.list-queue {
+  background-color: white !important;
+}
+</style>
