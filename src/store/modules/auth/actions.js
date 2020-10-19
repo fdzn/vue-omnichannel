@@ -27,7 +27,6 @@ export default {
 
   async logout(context) {
     const token = context.state.token;
-    console.log(token);
     if (token) {
       const url = `${process.env.VUE_APP_URL_BACKEND}/auth/logout`;
       const response = await fetch(url, {

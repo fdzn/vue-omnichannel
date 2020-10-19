@@ -3,7 +3,7 @@
     <div class="form-wrapper">
       <!-- logo -->
       <div class="logo background-yellow">
-        <i class="logo_chat_icon" style="width:70px !important"></i>
+        <i class="logo_chat_icon" style="width: 70px !important"></i>
       </div>
       <!-- ./ logo -->
 
@@ -22,15 +22,12 @@
           <input
             type="text"
             class="form-control h-form"
-            id="validationCustomUsername"
             placeholder="Username or Email"
             aria-describedby="inputGroupPrepend"
             required
             v-model.trim="username"
           />
-          <div class="invalid-feedback">
-            Please choose a username.
-          </div>
+          <div class="invalid-feedback">Please choose a username.</div>
         </div>
 
         <div class="input-group">
@@ -40,17 +37,14 @@
             ></span>
           </div>
           <input
-            type="password"
+            :type="typePassword"
             class="form-control h-form"
-            id="validationCustomUsername"
             placeholder="Password"
             autocomplete="off"
             v-model.trim="password"
           />
-          <span class="hide_position"><i class="hide_pass_icon"></i></span>
-          <div class="invalid-feedback">
-            Please choose a username.
-          </div>
+          <span @click="showPassword" class="hide_position"><i class="hide_pass_icon"></i></span>
+          <div class="invalid-feedback">Please choose a username.</div>
         </div>
         <div class="form-group d-flex justify-content-between">
           <div class="custom-control custom-checkbox">
@@ -60,12 +54,11 @@
               checked=""
               id="customCheck1"
             />
-            <label class="custom-control-label" for="customCheck1"
-              >Remember me</label
-            >
           </div>
         </div>
-        <button class="btn btn-blue btn-lg btn-block btn-signin">Sign in</button>
+        <button class="btn btn-blue btn-lg btn-block btn-signin">
+          Sign in
+        </button>
         <hr />
       </form>
       <!-- ./ form -->
@@ -78,22 +71,31 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
+      hiddenPasswordStatus: true,
     };
+  },
+  computed:{
+    typePassword(){
+      return this.hiddenPasswordStatus ? 'password' : 'text'
+    }
   },
   methods: {
     async login() {
       const actionPayload = {
         username: this.username,
-        password: this.password
+        password: this.password,
       };
 
       await this.$store.dispatch("login", actionPayload);
-    }
+    },
+    showPassword() {
+      this.hiddenPasswordStatus = !this.hiddenPasswordStatus;
+    },
     // getData(){
     //   this.$store.dispatch("checkLogin");
     // }
-  }
+  },
 };
 </script>
 
