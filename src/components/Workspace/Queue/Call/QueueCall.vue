@@ -6,7 +6,7 @@
       style="overflow: hidden; outline: none;"
     >
       <ul class="list-group list-group-flush">
-        <li class="list-group-item  open-chat">
+        <!-- <li class="list-group-item  open-chat">
           <figure class="avatar">
             <span class="avatar-title bg-pink rounded-circle">NF</span>
           </figure>
@@ -38,7 +38,7 @@
             <p>Ringing...</p>
           </div>
           <h6 class="text-muted small label-date">10.30</h6>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
