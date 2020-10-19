@@ -14,21 +14,14 @@
           :current-tab="currentTab"
           @set-active-tab="setActiveTab"
         />
-        <!-- <button
-          v-for="tab in tabs"
-          :key="tab"
-          :class="['tablinks', { active: currentTab === tab }]"
-          @click="setActiveTab(tab)"
-        >
-          {{ tab.toUpperCase()
-          }}<span class="badge-1">{{ queues[currentTab].length }}</span>
-        </button> -->
       </div>
       <keep-alive>
         <component
           :is="currentTabComponent"
           class="tab"
           :queues="queues[currentTab]"
+          :currentSessionId="currentSessionId"
+          @set-session-id="setSessionId"
         ></component>
       </keep-alive>
     </div>
@@ -44,41 +37,19 @@ import QueueCall from "./Queue/Call/QueueCall";
 import QueueVideo from "./Queue/Video/QueueVideo";
 
 export default {
-  data() {
-    return {
-      tabs: ["chat", "call", "video"],
-      currentTab: "chat",
-      queues: {
-        chat: [
-          {
-            sessionId: "123",
-            name: "Dimas Apriliansyah",
-            isPriority: true,
-            lastMessageTime: "12:00",
-            lastMessage:
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-          },
-          {
-            sessionId: "456",
-            name: "Elsa Maitsa",
-            isPriority: false,
-            lastMessageTime: "12:09",
-            lastMessage:
-              "Perspiciatis enim error dolor nam quia alias tenetur omnis"
-          },
-          {
-            sessionId: "789",
-            name: "Akhmad Faudzan",
-            isPriority: true,
-            lastMessageTime: "13:10",
-            lastMessage:
-              "Perspiciatis enim error dolor nam quia alias tenetur omnis"
-          }
-        ],
-        call: [],
-        video: []
-      }
-    };
+  props: {
+    tabs: {
+      type: Array
+    },
+    currentTab: {
+      type: String
+    },
+    queues: {
+      type: Object
+    },
+    currentSessionId: {
+      type: String
+    }
   },
   components: {
     "tab-header": TabHeader,
@@ -93,7 +64,12 @@ export default {
   },
   methods: {
     setActiveTab(tab) {
-      this.currentTab = tab;
+      // this.currentTab = tab;
+      this.$emit("set-active-tab", tab);
+    },
+    setSessionId(sessionId) {
+      // this.currentSessionId = sessionId;
+      this.$emit("set-session-id", sessionId);
     }
   }
 };

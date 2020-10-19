@@ -33,4 +33,7 @@ export default {
 .list-queue {
   background-color: white !important;
 }
+.label-name {
+  color: black !important;
+}
 </style>

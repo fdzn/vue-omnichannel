@@ -25,16 +25,18 @@
 <script>
 import ListChat from "./ListChat";
 export default {
-  data() {
-    return {
-      currentSessionId: null
-    };
+  props: {
+    queues: {
+      type: Array
+    },
+    currentSessionId: {
+      type: String
+    }
   },
-  props: ["queues"],
   components: { "list-chat": ListChat },
   methods: {
     setSessionId(sessionId) {
-      this.currentSessionId = sessionId;
+      this.$emit("set-session-id", sessionId);
     }
   }
 };

@@ -1,11 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Login from "../views/Login.vue";
-import Workspace from "../views/Workspace.vue";
 import store from "../store";
 import socketIO from "socket.io-client";
 import VueSocketIO from "vue-socket.io";
+
+// Component
+import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
+import Workspace from "../views/Workspace.vue";
+import InteractionChat from "../components/Workspace/Interaction/Chat.vue"
 
 Vue.use(VueRouter);
 
@@ -37,7 +40,15 @@ const routes = [
       {
         path: 'workspace',
         name: 'Workspace',
-        component: Workspace
+        component: Workspace,
+        children: [
+          {
+            path: "chat/:sessionId",
+            name: "InteractionChat",
+            component: InteractionChat,
+            props: true
+          }
+        ]
       }
     ],
   },
