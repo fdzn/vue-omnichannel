@@ -11,19 +11,25 @@
 export default {
   computed: {
     isLogin() {
-      return this.$store.getters.isLogin;
+      return this.$store.getters['auth/isLogin'];
     }
   },
   created() {
-    this.$store.dispatch("checkLogin");
+    this.$store.dispatch("auth/checkLogin");
   },
   watch: {
-    isLogin(curValue, oldValue) {
-      if (curValue && curValue !== oldValue) {
+    isLogin(curValue) {
+      console.log("ISLOGIN",curValue)
+      if(curValue){
         this.$router.replace("/");
-      } else {
+      }else{
         this.$router.replace("/login");
       }
+      // if (curValue && curValue !== oldValue) {
+      //   this.$router.replace("/");
+      // } else {
+      //   this.$router.replace("/login");
+      // }
     }
   }
 };

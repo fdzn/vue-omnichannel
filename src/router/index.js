@@ -8,7 +8,7 @@ import VueSocketIO from "vue-socket.io";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Workspace from "../views/Workspace.vue";
-import InteractionChat from "../components/Workspace/Interaction/Chat.vue"
+import InteractionChat from "../components/Workspace/Interaction/Chat.vue";
 
 Vue.use(VueRouter);
 
@@ -23,7 +23,7 @@ const routes = [
         new VueSocketIO({
           debug: true,
           connection: socketIO(
-            `${process.env.VUE_APP_URL_SOCKET}?username=${store.getters.username}&level=${store.getters.level}&groupId=${store.getters.groupId}`,
+            `${process.env.VUE_APP_URL_SOCKET}?username=${store.getters["auth/username"]}&level=${store.getters["auth/level"]}&groupId=${store.getters["auth/groupId"]}`,
             {
               transports: ["websocket"],
             }
@@ -38,18 +38,18 @@ const routes = [
     },
     children: [
       {
-        path: 'workspace',
-        name: 'Workspace',
+        path: "workspace",
+        name: "Workspace",
         component: Workspace,
         children: [
           {
             path: "chat/:sessionId",
             name: "InteractionChat",
             component: InteractionChat,
-            props: true
-          }
-        ]
-      }
+            props: true,
+          },
+        ],
+      },
     ],
   },
   {
@@ -67,11 +67,12 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach(function (to, from, next) {
-  if (to.meta.requiresAuth && !store.getters.isLogin) {
+router.beforeEach(function(to, from, next) {
+  console.log("STORE", store.getters["auth/isLogin"]);
+  if (to.meta.requiresAuth && !store.getters["auth/isLogin"]) {
     next("/login");
-  } else if (to.meta.requiresUnauth && store.getters.isLogin) {
-    next("/");
+  } else if (to.meta.requiresUnauth && store.getters["auth/isLogin"]) {
+    next();
   } else {
     next();
   }

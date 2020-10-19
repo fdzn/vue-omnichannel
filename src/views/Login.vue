@@ -87,7 +87,7 @@ export default {
         password: this.password,
       };
 
-      await this.$store.dispatch("login", actionPayload);
+      await this.$store.dispatch("auth/login", actionPayload);
     },
     showPassword() {
       this.hiddenPasswordStatus = !this.hiddenPasswordStatus;

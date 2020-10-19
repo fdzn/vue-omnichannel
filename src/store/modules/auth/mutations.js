@@ -10,7 +10,7 @@ export default {
     state.isLogin = true;
   },
 
-  setLogoutState(state) {
+  resetState(state) {
     state.username = null;
     state.level = null;
     state.unitId = null;

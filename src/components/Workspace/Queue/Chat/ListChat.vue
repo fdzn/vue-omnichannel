@@ -2,7 +2,7 @@
   <router-link
     :to="{
       name: 'InteractionChat',
-      params: { sessionId: sessionId }
+      params: { sessionId: sessionId },
     }"
   >
     <li
@@ -10,8 +10,8 @@
         'list-group-item',
         'list-queue',
         {
-          'open-chat': sessionId === currentSessionId
-        }
+          'open-chat': sessionId === currentSessionId,
+        },
       ]"
       @click="setSessionId"
     >
@@ -43,28 +43,28 @@
 export default {
   props: {
     currentSessionId: {
-      type: String
+      type: String,
     },
     sessionId: {
       type: String,
-      required: true
+      required: true,
     },
     name: {
       type: String,
-      required: true
+      required: true,
     },
     lastMessage: {
       type: String,
-      required: true
+      required: true,
     },
     lastMessageTime: {
       type: String,
-      required: true
+      required: true,
     },
     isPriority: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     avatarColor() {
@@ -74,33 +74,35 @@ export default {
         "bg-blue",
         "bg-info",
         "bg-orange",
-        "bg-primary"
+        "bg-primary",
       ];
       const randomColor = Math.floor(Math.random() * 5); // 0-4
       const color = colorsets[randomColor];
       // return color;
       return {
-        [color]: true
+        [color]: true,
       };
     },
     activeListClass() {
       return {
-        "open-chat": true
+        "open-chat": true,
       };
-    }
+    },
   },
   methods: {
     avatarName(name) {
       const str = name;
       console.log("str", str);
       const matches = str.match(/\b(\w)/g); // ['J','S','O','N']
-      const acronym = matches.join(""); // JSON
-
-      return acronym;
+      if (matches) {
+        return matches.join("");
+      } else {
+        return "-";
+      }
     },
     setSessionId() {
       this.$emit("set-session-id", this.sessionId);
-    }
-  }
+    },
+  },
 };
 </script>

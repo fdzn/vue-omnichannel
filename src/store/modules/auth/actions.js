@@ -91,13 +91,14 @@ export default {
   },
 
   resetCookies(context) {
-    const data = Cookies.get()
+    const data = Cookies.get();
 
     for (const [key] of Object.entries(data)) {
       Cookies.remove(key);
     }
 
-    context.commit("setLogoutState");
+    context.commit("workspace/resetState", null, { root: true });
+    context.commit("resetState");
   },
 
   checkLogin(context) {

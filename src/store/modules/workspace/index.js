@@ -6,13 +6,9 @@ export default {
   namespaced: true,
   state() {
     return {
-      username: null,
-      level: null,
-      unitId: null,
-      groupId: null,
-      token: null,
-      tokenExpiration: null,
-      isLogin: false,
+      queuesChat:[],
+      queuesVideo:[],
+      queuesCall:[],
     };
   },
   mutations,
