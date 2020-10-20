@@ -7,7 +7,7 @@ export default {
   state() {
     return {
       username: null,
-      isAux: null,
+      isAux: true,
       level: null,
       unitId: null,
       groupId: null,

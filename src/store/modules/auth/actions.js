@@ -95,7 +95,6 @@ export default {
     for (const [key] of Object.entries(data)) {
       Cookies.remove(key);
     }
-
     context.commit("workspace/resetState", null, { root: true });
     context.commit("resetState");
   },

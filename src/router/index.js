@@ -19,21 +19,24 @@ const routes = [
     component: Home,
     meta: { requiresAuth: true },
     beforeEnter(to, from, next) {
-      Vue.use(
-        new VueSocketIO({
-          debug: true,
-          connection: socketIO(
-            `${process.env.VUE_APP_URL_SOCKET}?username=${store.getters["auth/username"]}&level=${store.getters["auth/level"]}&groupId=${store.getters["auth/groupId"]}`,
-            {
-              transports: ["websocket"],
-            }
-          ),
-          vuex: {
-            store,
-            actionPrefix: "SOCKET_",
-          },
-        })
-      );
+      if (!Vue.prototype.$socket) {
+        Vue.use(
+          new VueSocketIO({
+            debug: true,
+            connection: socketIO(
+              `${process.env.VUE_APP_URL_SOCKET}?username=${store.getters["auth/username"]}&level=${store.getters["auth/level"]}&groupId=${store.getters["auth/groupId"]}`,
+              {
+                transports: ["websocket"],
+              }
+            ),
+            vuex: {
+              store,
+              actionPrefix: "SOCKET_",
+            },
+          })
+        );
+      }
+
       next();
     },
     children: [
