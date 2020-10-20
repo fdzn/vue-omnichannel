@@ -2,6 +2,10 @@ export default {
   username(state) {
     return state.username;
   },
+  
+  isAux(state) {
+    return state.isAux;
+  },
 
   groupId(state) {
     return state.groupId;

@@ -19,4 +19,7 @@ export default {
   URL_OUTGOING_WHATSAPP() {
     return `${baseUrl}/outgoing/whatsapp`;
   },
+  URL_UPDATE_AUX() {
+    return `${baseUrl}/autoin/updateAux`;
+  },
 };

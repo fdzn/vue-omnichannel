@@ -83,5 +83,5 @@ export default {
     } else {
       context.dispatch("auth/resetCookies", null, { root: true });
     }
-  },
+  }
 };

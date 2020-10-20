@@ -3,7 +3,9 @@
     <!-- Chats sidebar -->
     <div id="chats" class="sidebar w-300 active">
       <header class="bg-blue">
+        
         <h6 class="header-title">Workspace</h6>
+        <button :class="['btn', isAux ? 'btn-success':'btn-primary']" @click="toggleAux">{{ isAux ? "Play" : "Pause" }}</button>
       </header>
       <div class="tab">
         <tab-header
@@ -60,7 +62,10 @@ export default {
   computed: {
     currentTabComponent() {
       return "queue-" + this.currentTab;
-    }
+    },
+    isAux() {
+      return this.$store.getters["auth/isAux"];
+    },
   },
   methods: {
     setActiveTab(tab) {
@@ -70,6 +75,12 @@ export default {
     setSessionId(sessionId) {
       // this.currentSessionId = sessionId;
       this.$emit("set-session-id", sessionId);
+    },
+    async toggleAux() {
+      const auxStatus = !this.$store.getters["auth/isAux"];
+      await this.$store.dispatch("auth/updateAux", {
+        auxStatus
+      });
     }
   }
 };

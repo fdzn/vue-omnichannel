@@ -1,7 +1,7 @@
 export default {
   setUser(state, payload) {
     state.username = payload.username;
-    state.isAux = payload.isAux;
+    state.isAux = payload.isAux === "true" ? true : false;
     state.level = payload.level;
     state.unitId = payload.unitId;
     state.groupId = payload.groupId;
@@ -9,6 +9,10 @@ export default {
     state.exp = payload.exp;
     state.iat = payload.iat;
     state.isLogin = true;
+  },
+
+  updateAux(state, payload) {
+    state.isAux = payload
   },
 
   resetState(state) {

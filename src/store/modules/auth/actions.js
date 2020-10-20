@@ -102,10 +102,49 @@ export default {
 
   checkLogin(context) {
     const cookiesData = Cookies.get();
+
     if (cookiesData.token) {
       context.commit("setUser", cookiesData);
     } else {
       context.dispatch("resetCookies");
     }
   },
+
+  async updateAux(context, payload) {
+    const token = context.rootGetters["auth/token"];
+    if (token) {
+      const url = context.rootGetters.URL_UPDATE_AUX;
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const responseData = await response.json();
+      if (!response.ok) {
+        if (responseData.statusCode == 401) {
+          context.dispatch("auth/resetCookies", null, { root: true });
+        } else {
+          console.error(responseData);
+          return responseData;
+        }
+      }
+
+      if (process.env.VUE_APP_HTTPS_STATUS == "1") {
+        Cookies.set('isAux', payload.auxStatus, {
+          secure: true
+        })
+      } else {
+        Cookies.set('isAux', payload.auxStatus)
+      }
+
+      context.commit("updateAux", payload.auxStatus);
+
+    } else {
+      context.dispatch("auth/resetCookies", null, { root: true });
+    }
+  }
 };
