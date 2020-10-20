@@ -24,46 +24,28 @@ export default {
       tabs: ["chat", "call", "video"],
       currentTab: "chat",
       currentSessionId: null,
-      queues: {
-        chat: this.$store.getters["workspace/queuesChat"],
-        video: this.$store.getters["workspace/queuesVideo"],
-        call: this.$store.getters["workspace/queuesCall"],
-      },
     };
   },
-  mounted() {
-    this.$store.dispatch("workspace/getQueues", "whatsapp");
-  },
   computed: {
-    queuesChatComputed() {
-      return this.$store.getters["workspace/queuesChat"];
-    },
-    queuesVideoComputed() {
-      return this.$store.getters["workspace/queuesVideo"];
-    },
-    queuesCallComputed() {
-      return this.$store.getters["workspace/queuesCall"];
-    },
-  },
-  watch: {
-    queuesChatComputed(curValue) {
-      this.queues.chat = curValue;
-    },
-    queuesVideoComputed(curValue) {
-      this.queues.video = curValue;
-    },
-    queuesCallComputed(curValue) {
-      this.queues.call = curValue;
+    queues() {
+      return {
+        chat: this.$store.getters["workspace/queuesChat"],
+        call: this.$store.getters["workspace/queuesCall"],
+        video: this.$store.getters["workspace/queuesVideo"],
+      };
     },
   },
   methods: {
     setActiveTab(tab) {
       this.currentTab = tab;
+      this.$store.dispatch("workspace/getQueues", tab);
     },
     setSessionId(sessionId) {
       this.currentSessionId = sessionId;
-      // this.$emit("set-session-id", sessionId);
     },
+  },
+  mounted() {
+    this.setActiveTab("chat");
   },
   components: { "left-sidebar": LeftSidebar, "the-cwc": TheCwc },
 };

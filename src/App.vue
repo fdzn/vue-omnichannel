@@ -24,11 +24,6 @@ export default {
       }else{
         this.$router.replace("/login");
       }
-      // if (curValue && curValue !== oldValue) {
-      //   this.$router.replace("/");
-      // } else {
-      //   this.$router.replace("/login");
-      // }
     }
   }
 };

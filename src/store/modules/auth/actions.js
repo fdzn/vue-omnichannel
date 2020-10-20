@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 export default {
   async login(context, payload) {
-    const url = `${process.env.VUE_APP_URL_BACKEND}/auth/login`;
+    const url = context.rootGetters.URL_LOGIN;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -28,7 +28,7 @@ export default {
   async logout(context) {
     const token = context.state.token;
     if (token) {
-      const url = `${process.env.VUE_APP_URL_BACKEND}/auth/logout`;
+      const url = context.rootGetters.URL_LOGOUT;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -52,7 +52,7 @@ export default {
   },
 
   async setCookies(context, token) {
-    const url = `${process.env.VUE_APP_URL_BACKEND}/auth/getDataLogin`;
+    const url = context.rootGetters.URL_GET_DATA_LOGIN;
     const response = await fetch(url, {
       method: "GET",
       headers: {

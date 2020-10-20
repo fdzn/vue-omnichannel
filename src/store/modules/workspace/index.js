@@ -6,6 +6,11 @@ export default {
   namespaced: true,
   state() {
     return {
+      jumQueue: {
+        chat: 0,
+        call: 0,
+        video: 0,
+      },
       queuesChat: [],
       queuesVideo: [],
       queuesCall: [],

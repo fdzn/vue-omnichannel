@@ -1,85 +1,65 @@
 export default {
-  getQueues(context, channelId) {
+  async getQueues(context) {
     const token = context.rootGetters["auth/token"];
     if (token) {
-      const url = `${process.env.VUE_APP_URL_BACKEND}/interaction/loadWorkOrder/${channelId}`;
-      fetch(url, {
+      const url = context.rootGetters.URL_GET_WORK_ORDER;
+      const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((res) => {
-          if (!res.ok) {
-            if (res.status == 401) {
-              context.dispatch("auth/resetCookies", null, { root: true });
-              return;
-            }
-          }
+      });
 
-          res
-            .json()
-            .then((resData) => {
-              const { data } = resData;
-              context.commit("initialQueuesChat", data);
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        })
-        .catch((err) => {
-          //   console.error(err);
-          console.error(err);
-        });
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        if (responseData.statusCode == 401) {
+          context.dispatch("auth/resetCookies", null, { root: true });
+        } else {
+          console.error(response);
+        }
+      }
+
+      const { data } = responseData;
+      context.commit("initialQueues", data);
     } else {
       context.dispatch("auth/resetCookies", null, { root: true });
     }
   },
-  getInteraction(context, payload) {
+
+  async getInteraction(context, payload) {
     const token = context.rootGetters["auth/token"];
     if (token) {
-      const url = `${process.env.VUE_APP_URL_BACKEND}/interaction/getInteraction/${payload.channelId}/interaction/${payload.sessionId}`;
-      fetch(url, {
+      const url = context.rootGetters.URL_GET_INTERACTION(payload);
+      const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((res) => {
-          if (!res.ok) {
-            if (res.status == 401) {
-              context.dispatch("auth/resetCookies", null, { root: true });
-              return;
-            }
-          }
+      });
+      const responseData = await response.json();
 
-          res
-            .json()
-            .then((resData) => {
-              const { data } = resData;
-              context.commit("initialChatMessage", data);
-              // context.commit("initialQueuesChat", data);
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        })
-        .catch((err) => {
-          //   console.error(err);
-          console.error(err);
-        });
+      if (!response.ok) {
+        if (responseData.statusCode == 401) {
+          context.dispatch("auth/resetCookies", null, { root: true });
+        } else {
+          console.error(response);
+        }
+      }
+
+      const { data } = responseData;
+      context.commit("initialChatMessage", data);
     } else {
       context.dispatch("auth/resetCookies", null, { root: true });
     }
   },
 
   async sendMessageWhatsapp(context, payload) {
-    console.log("sendMessageWhatsapp");
     const token = context.rootGetters["auth/token"];
     if (token) {
-      const url = `${process.env.VUE_APP_URL_BACKEND}/outgoing/whatsapp`;
+      const url = context.rootGetters.URL_OUTGOING_WHATSAPP;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -94,13 +74,12 @@ export default {
         if (responseData.statusCode == 401) {
           context.dispatch("auth/resetCookies", null, { root: true });
         } else {
-          console.log(responseData);
+          console.error(responseData);
           return responseData;
         }
       }
 
       return responseData;
-      
     } else {
       context.dispatch("auth/resetCookies", null, { root: true });
     }

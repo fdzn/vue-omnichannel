@@ -42,6 +42,7 @@
         <bubble-chat
           v-for="chatMessage in chatMessages"
           :key="`${sessionId}:${chatMessage.id}`"
+          :id="`${sessionId}:${chatMessage.id}`"
           :name="chatMessage.name"
           :message="chatMessage.message"
           :media="chatMessage.media"
@@ -90,9 +91,6 @@ export default {
   },
   data() {
     return {
-      chatMessages: this.$store.getters["workspace/chatMessage"](
-        this.sessionId
-      ),
       message: "",
     };
   },
@@ -100,14 +98,8 @@ export default {
     this.$store.dispatch("workspace/getInteraction", this);
   },
   computed: {
-    chatMessagesComputed() {
-      const data = this.$store.getters["workspace/chatMessage"](this.sessionId);
-      return data;
-    },
-  },
-  watch: {
-    chatMessagesComputed(curValue) {
-      this.chatMessages = curValue;
+    chatMessages() {
+      return this.$store.getters["workspace/chatMessage"](this.sessionId);
     },
   },
   methods: {
