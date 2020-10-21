@@ -5,7 +5,7 @@
       <header class="bg-blue">
         
         <h6 class="header-title">Workspace</h6>
-        <button :class="['btn', isAux ? 'btn-success':'btn-primary']" @click="toggleAux">{{ isAux ? "Play" : "Pause" }}</button>
+        <button :class="['btn', isAux ? 'btn-primary':'btn-success']" @click="toggleAux">{{ isAux ? "Pause" : "Play" }}</button>
       </header>
       <div class="tab">
         <tab-header
