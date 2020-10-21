@@ -4,10 +4,10 @@
       <div class="d-flex flex-row">
         <div>
           <div class="chat-header-user">
-            <h6 class="text-chat-header">Nada Fadhilah Fitriyani</h6>
+            <h6 class="text-chat-header">{{sessionId}}</h6>
           </div>
         </div>
-        <div class="ml-3 pt-2">
+        <!-- <div class="ml-3 pt-2">
           <button class="btn btn-yellow-outline">
             <div class="d-flex flex-row pt-1">
               <div>
@@ -18,7 +18,7 @@
               </div>
             </div>
           </button>
-        </div>
+        </div> -->
       </div>
       <div class="chat-header-action">
         <ul class="list-inline">
@@ -34,7 +34,7 @@
         </ul>
       </div>
     </div>
-    <div class="chat-body" tabindex="1" style="overflow: hidden; outline: none">
+    <div class="chat-body" tabindex="1" style="overflow-y: auto; outline: none">
       <div class="box-detail-date">
         <h6 class="text-detail-date">Today</h6>
       </div>
@@ -81,17 +81,17 @@ export default {
   props: {
     sessionId: {
       type: String,
-      required: true,
+      required: true
     },
     channelId: {
       type: String,
       required: true,
-      default: "whatsapp",
-    },
+      default: "whatsapp"
+    }
   },
   data() {
     return {
-      message: "",
+      message: ""
     };
   },
   mounted() {
@@ -100,7 +100,7 @@ export default {
   computed: {
     chatMessages() {
       return this.$store.getters["workspace/chatMessage"](this.sessionId);
-    },
+    }
   },
   methods: {
     async sendMessage() {
@@ -117,7 +117,7 @@ export default {
           fromName: fromName,
           convId: convId,
           message: this.message,
-          media: null,
+          media: null
         };
 
         const result = await this.$store.dispatch(
@@ -131,10 +131,10 @@ export default {
           this.message = "";
         }
       }
-    },
+    }
   },
   components: {
-    "bubble-chat": BubbleChat,
-  },
+    "bubble-chat": BubbleChat
+  }
 };
 </script>
