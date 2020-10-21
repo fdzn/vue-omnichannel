@@ -3,9 +3,19 @@
     <!-- Chats sidebar -->
     <div id="chats" class="sidebar w-300 active">
       <header class="bg-blue">
-        
         <h6 class="header-title">Workspace</h6>
-        <button :class="['btn', isAux ? 'btn-success':'btn-primary']" @click="toggleAux">{{ isAux ? "Play" : "Pause" }}</button>
+        <div class="form-item custom-control custom-switch">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="switch-aux"
+            v-model="isAux"
+          />
+          <label class="custom-control-label" for="switch-aux">{{
+            isAux ? "Play" : "Pause "
+          }}</label>
+        </div>
+        <!-- <button :class="['btn', isAux ? 'btn-success':'btn-primary']" @click="toggleAux">{{ isAux ? "Play" : "Pause" }}</button> -->
       </header>
       <div class="tab">
         <tab-header
@@ -63,9 +73,27 @@ export default {
     currentTabComponent() {
       return "queue-" + this.currentTab;
     },
-    isAux() {
-      return this.$store.getters["auth/isAux"];
-    },
+    isAux: {
+      get: function() {
+        return !this.$store.getters["auth/isAux"];
+      },
+      set: async function() {
+        console.log(
+          'this.$store.getters["auth/isAux"]',
+          this.$store.getters["auth/isAux"]
+        );
+        const auxStatus = !this.$store.getters["auth/isAux"];
+        console.log("auxStatus", auxStatus);
+        await this.$store.dispatch("auth/updateAux", {
+          auxStatus
+        });
+      }
+    }
+    // isAux(hai) {
+
+    //   console.log(hai);
+    //   return this.$store.getters["auth/isAux"];
+    // }
   },
   methods: {
     setActiveTab(tab) {
@@ -75,12 +103,6 @@ export default {
     setSessionId(sessionId) {
       // this.currentSessionId = sessionId;
       this.$emit("set-session-id", sessionId);
-    },
-    async toggleAux() {
-      const auxStatus = !this.$store.getters["auth/isAux"];
-      await this.$store.dispatch("auth/updateAux", {
-        auxStatus
-      });
     }
   }
 };
