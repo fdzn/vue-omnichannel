@@ -4,11 +4,11 @@
       <div class="d-flex flex-row">
         <div>
           <div class="chat-header-user">
-            <h6 class="text-chat-header">{{sessionId}}</h6>
+            <h6 class="text-chat-header">{{ queueData.name }}</h6>
           </div>
         </div>
-        <!-- <div class="ml-3 pt-2">
-          <button class="btn btn-yellow-outline">
+        <div class="ml-3 pt-2">
+          <button v-if="queueData.isPriority" class="btn btn-yellow-outline">
             <div class="d-flex flex-row pt-1">
               <div>
                 <i class="star_icon mr-2"></i>
@@ -18,7 +18,17 @@
               </div>
             </div>
           </button>
-        </div> -->
+          <button v-else class="btn btn-green-outline">
+            <div class="d-flex flex-row pt-1">
+              <!-- <div>
+                <i class="star_icon mr-2"></i>
+              </div> -->
+              <div>
+                <h6 class="font-green-regular">Regular</h6>
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
       <div class="chat-header-action">
         <ul class="list-inline">
@@ -34,11 +44,15 @@
         </ul>
       </div>
     </div>
-    <div class="chat-body" tabindex="1" style="overflow-y: auto; outline: none">
+    <div class="chat-body" tabindex="1" style="outline: none">
       <div class="box-detail-date">
         <h6 class="text-detail-date">Today</h6>
       </div>
-      <div class="messages">
+      <the-messages
+        :chatMessages="chatMessages"
+        :sessionId="sessionId"
+      ></the-messages>
+      <!-- <div class="messages">
         <bubble-chat
           v-for="chatMessage in chatMessages"
           :key="`${sessionId}:${chatMessage.id}`"
@@ -50,7 +64,7 @@
           :messageDate="chatMessage.messageDate"
           :isMedia="chatMessage.isMedia"
         />
-      </div>
+      </div> -->
     </div>
     <div class="chat-footer">
       <form @submit.prevent="sendMessage">
@@ -76,7 +90,8 @@
 </template>
 
 <script>
-import BubbleChat from "./BubbleChat";
+// import BubbleChat from "./BubbleChat";
+import TheMessages from "./TheMessages";
 export default {
   props: {
     sessionId: {
@@ -100,6 +115,12 @@ export default {
   computed: {
     chatMessages() {
       return this.$store.getters["workspace/chatMessage"](this.sessionId);
+    },
+    queueData() {
+      return this.$store.getters["workspace/getQueueBySession"](
+        this.sessionId,
+        "chat"
+      )[0];
     }
   },
   methods: {
@@ -134,7 +155,23 @@ export default {
     }
   },
   components: {
-    "bubble-chat": BubbleChat
+    // "bubble-chat": BubbleChat,
+    "the-messages": TheMessages
   }
 };
 </script>
+
+<style scoped>
+.btn-green-outline {
+  background-color: #fff;
+  border: 2px solid #5cbc81;
+  box-sizing: border-box;
+  border-radius: 50px;
+  padding: 0px 15px !important;
+}
+.font-green-regular {
+  font-size: 10px;
+  color: #5cbc81;
+  font-weight: 600;
+}
+</style>
