@@ -54,7 +54,11 @@
             <h6 class="text-grey font12 font-normal pt-2">Remark</h6>
           </div>
           <div class="col-sm-8">
-            <textarea class="form-control no-border font12" rows="2"></textarea>
+            <textarea
+              v-model="remark"
+              class="form-control no-border font12"
+              rows="2"
+            ></textarea>
           </div>
         </div>
         <div class="row">
@@ -62,7 +66,11 @@
             <h6 class="text-grey font12 font-normal pt-2">Feedback</h6>
           </div>
           <div class="col-sm-8">
-            <textarea class="form-control no-border font12" rows="2"></textarea>
+            <textarea
+              v-model="feedback"
+              class="form-control no-border font12"
+              rows="2"
+            ></textarea>
           </div>
         </div>
         <div class="row mt-1">
@@ -71,13 +79,41 @@
           </div>
           <div class="col-sm-8">
             <div class="d-flex flex-row">
-              <div><i class="emoji_smile_icon"></i></div>
-              <div><i class="emoji_flat_icon"></i></div>
-              <div><i class="emoji_sad_icon"></i></div>
+              <div @click="setSentiment('happy')">
+                <i
+                  :class="[
+                    sentiment === 'happy'
+                      ? 'emoji_smile_icon_active'
+                      : 'emoji_smile_icon_nonactive'
+                  ]"
+                ></i>
+              </div>
+              <div @click="setSentiment('flat')">
+                <i
+                  :class="[
+                    sentiment === 'flat'
+                      ? 'emoji_flat_icon_active'
+                      : 'emoji_flat_icon_nonactive'
+                  ]"
+                ></i>
+              </div>
+              <div @click="setSentiment('sad')">
+                <i
+                  :class="[
+                    sentiment === 'sad'
+                      ? 'emoji_sad_icon_active'
+                      : 'emoji_sad_icon_nonactive'
+                  ]"
+                ></i>
+              </div>
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn-block btn-yellow btn-md mt-3">
+        <button
+          @click="submitCwc"
+          type="button"
+          class="btn btn-block btn-yellow btn-md mt-3"
+        >
           Save
         </button>
       </b-card-body>
@@ -154,9 +190,13 @@ export default {
           idCategory: 2,
           idSubCategory: 3
         }
-      ]
+      ],
+      sentiment: null,
+      remark: "",
+      feedback: ""
     };
   },
+  computed: {},
   components: {
     "data-table": DataTable
   },
@@ -171,6 +211,20 @@ export default {
       console.log("row.subcategory>>>", row.subcategory);
       console.log("row.idSubCategory>>>", row.idSubCategory);
       this.$bvModal.hide("modal-category");
+      alert("check console.log");
+    },
+    setSentiment(mood) {
+      this.sentiment = mood;
+    },
+    submitCwc() {
+      const cwcData = {
+        categoryId: this.categoryId,
+        subcategoryId: this.subcategoryId,
+        sentiment: this.sentiment,
+        remark: this.remark,
+        feedback: this.feedback
+      };
+      console.log("cwcData", cwcData);
       alert("check console.log");
     }
   }
