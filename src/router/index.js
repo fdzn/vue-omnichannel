@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import store from "../store";
 import socketIO from "socket.io-client";
 import VueSocketIO from "vue-socket.io";
+import { BootstrapVue } from 'bootstrap-vue'
 
 // Component
 import Home from "../views/Home.vue";
@@ -11,6 +12,9 @@ import Workspace from "../views/Workspace.vue";
 import InteractionChat from "../components/Workspace/Interaction/Chat.vue";
 
 Vue.use(VueRouter);
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
 
 const routes = [
   {

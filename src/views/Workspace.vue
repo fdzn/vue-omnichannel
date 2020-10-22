@@ -16,7 +16,7 @@
 <script>
 // @ is an alias to /src
 import LeftSidebar from "@/components/Workspace/LeftSidebar.vue";
-import TheCwc from "@/components/TheCwc.vue";
+import TheCwc from "@/components/TheCwc/TheCwc.vue";
 
 export default {
   data() {
