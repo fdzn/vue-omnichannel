@@ -22,13 +22,14 @@
             <h6 class="text-grey font12 font-normal pt-2">Category</h6>
           </div>
           <div class="col-sm-8">
-            <input type="text" class="form-control no-border font12" value="" />
-            <a
-              href="#"
-              class="pencil_input text-blue-1 font-weight-bold"
-              style="margin-left: 11.5em;"
-              >Select</a
-            >
+            <input
+              v-b-modal.modal-category
+              readonly
+              type="text"
+              class="form-control no-border font12"
+              :data-id="categoryId"
+              :value="category"
+            />
           </div>
         </div>
         <div class="row">
@@ -38,7 +39,14 @@
             </h6>
           </div>
           <div class="col-sm-8">
-            <input type="text" class="form-control no-border font12" value="" />
+            <input
+              readonly
+              type="text"
+              class="form-control no-border font12"
+              :data-id="subcategoryId"
+              :value="subcategory"
+              style="margin-top:10px;"
+            />
           </div>
         </div>
         <div class="row">
@@ -74,5 +82,97 @@
         </button>
       </b-card-body>
     </b-collapse>
+    <b-modal id="modal-category" size="lg" title="Select Category">
+      <b-container fluid>
+        <data-table
+          title="Categories"
+          :columns="categoryColumns"
+          :rows="rowsColumns"
+          @row-click="selectedCategory"
+        >
+          <th slot="thead-tr">
+            Actions
+          </th>
+          <template slot="tbody-tr">
+            <td>
+              <button class="btn btn-info btn-md">
+                Select
+              </button>
+            </td>
+          </template>
+        </data-table>
+      </b-container>
+    </b-modal>
   </b-card>
 </template>
+
+<script>
+import DataTable from "vue-materialize-datatable";
+export default {
+  data() {
+    return {
+      categoryId: null,
+      category: null,
+      subcategoryId: null,
+      subcategory: null,
+      categoryColumns: [
+        {
+          label: "Category",
+          field: "category",
+          numeric: false,
+          html: false
+        },
+        {
+          label: "Sub Category",
+          field: "subcategory",
+          numeric: false,
+          html: false
+        }
+      ],
+      rowsColumns: [
+        {
+          category: "Wrong Call",
+          subcategory: "Banking",
+          idCategory: 1,
+          idSubCategory: 1
+        },
+        {
+          category: "Inquiry",
+          subcategory: "Pricelist-Daily",
+          idCategory: 2,
+          idSubCategory: 1
+        },
+        {
+          category: "Inquiry",
+          subcategory: "Pricelist-Weekly",
+          idCategory: 2,
+          idSubCategory: 2
+        },
+        {
+          category: "Inquiry",
+          subcategory: "Pricelist-Monthly",
+          idCategory: 2,
+          idSubCategory: 3
+        }
+      ]
+    };
+  },
+  components: {
+    "data-table": DataTable
+  },
+  methods: {
+    selectedCategory(row) {
+      this.categoryId = row.idCategory;
+      this.category = row.category;
+      this.subcategoryId = row.idSubCategory;
+      this.subcategory = row.subcategory;
+      console.log("row.category>>>", row.category);
+      console.log("row.idCategory>>>", row.idCategory);
+      console.log("row.subcategory>>>", row.subcategory);
+      console.log("row.idSubCategory>>>", row.idSubCategory);
+      this.$bvModal.hide("modal-category");
+      alert("check console.log");
+    }
+  }
+};
+</script>
