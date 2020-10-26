@@ -183,4 +183,34 @@ export default {
       context.dispatch("auth/resetCookies", null, { root: true });
     }
   },
+
+  async submitCWC(context, payload) {
+    const token = context.rootGetters["auth/token"];
+    if (token) {
+      const url = context.rootGetters.URL_SUBMIT_CWC;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const responseData = await response.json();
+      if (!response.ok) {
+        if (responseData.statusCode == 401) {
+          context.dispatch("auth/resetCookies", null, { root: true });
+        } else {
+          console.error(responseData);
+          return responseData;
+        }
+      }
+
+      context.commit("endSession", payload);
+      return responseData;
+    } else {
+      context.dispatch("auth/resetCookies", null, { root: true });
+    }
+  },
 };

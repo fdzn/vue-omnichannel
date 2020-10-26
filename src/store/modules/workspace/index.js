@@ -17,6 +17,7 @@ export default {
       chatMessages: {},
       customerData: [],
       cwc: [],
+      currentSessionId: null,
     };
   },
   mutations,

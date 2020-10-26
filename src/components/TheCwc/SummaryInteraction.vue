@@ -34,9 +34,7 @@
         </div>
         <div class="row">
           <div class="col-sm-4">
-            <h6 class="text-grey font12 font-normal pt-2">
-              Sub Category
-            </h6>
+            <h6 class="text-grey font12 font-normal pt-2">Sub Category</h6>
           </div>
           <div class="col-sm-8">
             <input
@@ -45,7 +43,7 @@
               class="form-control no-border font12"
               :data-id="subcategoryId"
               :value="subcategory"
-              style="margin-top:10px;"
+              style="margin-top: 10px"
             />
           </div>
         </div>
@@ -84,7 +82,7 @@
                   :class="[
                     sentiment === 'happy'
                       ? 'emoji_smile_icon_active'
-                      : 'emoji_smile_icon_nonactive'
+                      : 'emoji_smile_icon_nonactive',
                   ]"
                 ></i>
               </div>
@@ -93,7 +91,7 @@
                   :class="[
                     sentiment === 'flat'
                       ? 'emoji_flat_icon_active'
-                      : 'emoji_flat_icon_nonactive'
+                      : 'emoji_flat_icon_nonactive',
                   ]"
                 ></i>
               </div>
@@ -102,7 +100,7 @@
                   :class="[
                     sentiment === 'sad'
                       ? 'emoji_sad_icon_active'
-                      : 'emoji_sad_icon_nonactive'
+                      : 'emoji_sad_icon_nonactive',
                   ]"
                 ></i>
               </div>
@@ -126,14 +124,10 @@
           :rows="rowsColumns"
           @row-click="selectedCategory"
         >
-          <th slot="thead-tr">
-            Actions
-          </th>
+          <th slot="thead-tr">Actions</th>
           <template slot="tbody-tr">
             <td>
-              <button class="btn btn-info btn-md">
-                Select
-              </button>
+              <button class="btn btn-info btn-md">Select</button>
             </td>
           </template>
         </data-table>
@@ -145,6 +139,16 @@
 <script>
 import DataTable from "vue-materialize-datatable";
 export default {
+  props: {
+    sessionId: {
+      type: String,
+      required: true,
+    },
+    channelId: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       categoryId: null,
@@ -156,49 +160,49 @@ export default {
           label: "Category",
           field: "category",
           numeric: false,
-          html: false
+          html: false,
         },
         {
           label: "Sub Category",
           field: "subcategory",
           numeric: false,
-          html: false
-        }
+          html: false,
+        },
       ],
       rowsColumns: [
         {
           category: "Wrong Call",
           subcategory: "Banking",
           idCategory: 1,
-          idSubCategory: 1
+          idSubCategory: 1,
         },
         {
           category: "Inquiry",
           subcategory: "Pricelist-Daily",
           idCategory: 2,
-          idSubCategory: 1
+          idSubCategory: 1,
         },
         {
           category: "Inquiry",
           subcategory: "Pricelist-Weekly",
           idCategory: 2,
-          idSubCategory: 2
+          idSubCategory: 2,
         },
         {
           category: "Inquiry",
           subcategory: "Pricelist-Monthly",
           idCategory: 2,
-          idSubCategory: 3
-        }
+          idSubCategory: 3,
+        },
       ],
-      sentiment: null,
+      sentiment: "flat",
+      sentimentId: 0,
       remark: "",
-      feedback: ""
+      feedback: "",
     };
   },
-  computed: {},
   components: {
-    "data-table": DataTable
+    "data-table": DataTable,
   },
   methods: {
     selectedCategory(row) {
@@ -215,18 +219,34 @@ export default {
     },
     setSentiment(mood) {
       this.sentiment = mood;
+      switch (mood) {
+        case "happy":
+          this.sentimentId = 1;
+          break;
+        case "flat":
+          this.sentimentId = 0;
+          break;
+        case "sad":
+          this.sentimentId = -1;
+          break;
+        default:
+          this.sentimentId = 0;
+          break;
+      }
     },
-    submitCwc() {
+    async submitCwc() {
       const cwcData = {
+        sessionId: this.sessionId,
+        channelId: this.channelId,
         categoryId: this.categoryId,
         subcategoryId: this.subcategoryId,
-        sentiment: this.sentiment,
         remark: this.remark,
-        feedback: this.feedback
+        feedback: this.feedback,
+        sentiment: this.sentimentId,
       };
-      console.log("cwcData", cwcData);
-      alert("check console.log");
-    }
-  }
+      await this.$store.dispatch("workspace/submitCWC", cwcData);
+      this.$router.replace("/workspace");
+    },
+  },
 };
 </script>

@@ -96,13 +96,13 @@ export default {
   props: {
     sessionId: {
       type: String,
-      required: true
+      required: true,
     },
     channelId: {
       type: String,
       required: true,
-      default: "whatsapp"
-    }
+      default: "whatsapp",
+    },
   },
   data() {
     return {
@@ -112,6 +112,10 @@ export default {
   },
   mounted() {
     this.$store.dispatch("workspace/getData", this);
+    this.$store.commit("workspace/setState", {
+      type: "currentSessionId",
+      value: this.sessionId,
+    });
   },
   computed: {
     chatMessages() {
@@ -122,7 +126,7 @@ export default {
         this.sessionId,
         "chat"
       )[0];
-    }
+    },
   },
   methods: {
     async sendMessage() {
@@ -139,7 +143,7 @@ export default {
           fromName: fromName,
           convId: convId,
           message: this.message,
-          media: null
+          media: null,
         };
 
         const result = await this.$store.dispatch(
@@ -153,12 +157,12 @@ export default {
           this.message = "";
         }
       }
-    }
+    },
   },
   components: {
     // "bubble-chat": BubbleChat,
-    "the-messages": TheMessages
-  }
+    "the-messages": TheMessages,
+  },
 };
 </script>
 

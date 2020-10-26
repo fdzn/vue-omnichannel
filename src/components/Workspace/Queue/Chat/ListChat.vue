@@ -13,7 +13,6 @@
           'open-chat': sessionId === currentSessionId,
         },
       ]"
-      @click="setSessionId"
     >
       <figure class="avatar">
         <span :class="avatarColor" class="avatar-title rounded-circle">{{
@@ -42,9 +41,6 @@
 <script>
 export default {
   props: {
-    currentSessionId: {
-      type: String,
-    },
     sessionId: {
       type: String,
       required: true,
@@ -67,6 +63,9 @@ export default {
     },
   },
   computed: {
+    currentSessionId() {
+      return this.$store.getters["workspace/getState"]("currentSessionId");
+    },
     avatarColor() {
       const colorsets = [
         "bg-pink",
@@ -97,9 +96,6 @@ export default {
       } else {
         return "-";
       }
-    },
-    setSessionId() {
-      this.$emit("set-session-id", this.sessionId);
     },
   },
 };

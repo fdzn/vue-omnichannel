@@ -1,4 +1,7 @@
 export default {
+  getState: (state) => (type) => {
+    return state[type];
+  },
   queuesChat(state) {
     return state.queuesChat;
   },
@@ -16,21 +19,27 @@ export default {
     }
   },
   getQueueBySession: (state) => (sessionId, channelId) => {
-    console.log('sessionId',sessionId)
-    console.log('channelId',channelId)
-    let found = []
+    console.log("sessionId", sessionId);
+    console.log("channelId", channelId);
+    let found = [];
     switch (channelId) {
-      case 'chat':
-        found = state.queuesChat.filter((queue) => queue.sessionId === sessionId)
-        return found
-      case 'video':
-        found = state.queuesVideo.filter((queue) => queue.sessionId === sessionId)
-        return found
-      case 'call':
-        found = state.queuesCall.filter((queue) => queue.sessionId === sessionId)
-        return found
+      case "chat":
+        found = state.queuesChat.filter(
+          (queue) => queue.sessionId === sessionId
+        );
+        return found;
+      case "video":
+        found = state.queuesVideo.filter(
+          (queue) => queue.sessionId === sessionId
+        );
+        return found;
+      case "call":
+        found = state.queuesCall.filter(
+          (queue) => queue.sessionId === sessionId
+        );
+        return found;
       default:
-        return found
+        return found;
     }
     // console.log('sessionId', sessionId);
     // let found = state.queuesChat.filter((queue) => {

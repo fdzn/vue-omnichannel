@@ -1,15 +1,8 @@
 <template>
   <div class="content">
-    <left-sidebar
-      :tabs="tabs"
-      :currentTab="currentTab"
-      :queues="queues"
-      :currentSessionId="currentSessionId"
-      @set-active-tab="setActiveTab"
-      @set-session-id="setSessionId"
-    ></left-sidebar>
+    <left-sidebar></left-sidebar>
     <router-view :key="$route.path" />
-    <the-cwc v-if="currentSessionId" :currentSessionId="currentSessionId"></the-cwc>
+    <the-cwc v-if="currentSessionId" :sessionId="currentSessionId"></the-cwc>
   </div>
 </template>
 
@@ -19,33 +12,16 @@ import LeftSidebar from "@/components/Workspace/LeftSidebar.vue";
 import TheCwc from "@/components/TheCwc/TheCwc.vue";
 
 export default {
-  data() {
-    return {
-      tabs: ["chat", "call", "video"],
-      currentTab: "chat",
-      currentSessionId: null,
-    };
-  },
   computed: {
-    queues() {
-      return {
-        chat: this.$store.getters["workspace/queuesChat"],
-        call: this.$store.getters["workspace/queuesCall"],
-        video: this.$store.getters["workspace/queuesVideo"],
-      };
+    currentSessionId() {
+      return this.$store.getters["workspace/getState"]("currentSessionId");
     },
   },
-  methods: {
-    setActiveTab(tab) {
-      this.currentTab = tab;
-      this.$store.dispatch("workspace/getQueues", tab);
-    },
-    setSessionId(sessionId) {
-      this.currentSessionId = sessionId;
-    },
-  },
-  mounted() {
-    this.setActiveTab("chat");
+  created() {
+    this.$store.commit("workspace/setState", {
+      type: "currentSessionId",
+      value: null,
+    });
   },
   components: { "left-sidebar": LeftSidebar, "the-cwc": TheCwc },
 };

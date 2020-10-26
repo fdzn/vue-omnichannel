@@ -12,7 +12,10 @@
           <customer-profile
             :customerId="this.detailQueue.customerId"
           ></customer-profile>
-          <summary-interaction></summary-interaction>
+          <summary-interaction
+            :channelId="detailQueue.channelId"
+            :sessionId="sessionId"
+          ></summary-interaction>
           <journey-customer></journey-customer>
         </div>
       </div>
@@ -26,15 +29,14 @@ import SummaryInteraction from "./SummaryInteraction";
 import JourneyCustomer from "./JourneyCustomer";
 export default {
   props: {
-    currentSessionId: {
+    sessionId: {
       type: String,
+      required: true,
     },
   },
   computed: {
     detailQueue() {
-      return this.$store.getters["workspace/queuesBySessionId"](
-        this.currentSessionId
-      );
+      return this.$store.getters["workspace/queuesBySessionId"](this.sessionId);
     },
   },
   components: {

@@ -1,6 +1,10 @@
 // import Vue from "vue";
 
 export default {
+  setState(state, payload) {
+    const { type, value } = payload;
+    state[type] = value;
+  },
   //QUEUES
   setQueues(state, payload) {
     let arrayChat = [];
@@ -13,6 +17,7 @@ export default {
           arrayChat.push({
             sessionId: row.sessionId,
             customerId: row.customerId,
+            channelId: row.channelId,
             name: row.fromName ? row.fromName : row.from,
             isPriority: Boolean(row.priority),
             lastMessageTime: row.lastChat.sendDate,
@@ -34,6 +39,7 @@ export default {
         state.queuesChat.push({
           sessionId: payload.sessionId,
           customerId: payload.customerId,
+          channelId: payload.channelId,
           name: payload.fromName ? payload.fromName : payload.from,
           isPriority: Boolean(payload.priority),
           lastMessageTime: payload.lastChat.sendDate,
@@ -121,6 +127,33 @@ export default {
     state.chatMessages[sessionId][index].sendStatus = payload.sendStatus;
     state.chatMessages[sessionId][index].systemMessage = payload.systemMessage;
   },
+  endSession(state, payload) {
+    const { sessionId, channelId } = payload;
+    if (channelId == "whatsapp") {
+
+      //DELETE QUEUE
+      const index = state.queuesChat.findIndex(
+        (x) => x.sessionId === sessionId
+      );
+      const detailQueue = state.queuesChat[index];
+      state.queuesChat.splice(index, 1);
+
+      //DELETE CHAT MESSAGE
+      delete state.chatMessages[sessionId];
+
+      //DELETE CUSTOMER DATA
+      const indexCustomer = state.customerData.findIndex(
+        (x) => x.id === detailQueue.customerId
+      );
+      state.customerData.splice(indexCustomer, 1);
+
+      //DELETE CWC
+      const indexCWC = state.cwc.findIndex((x) => x.sessionId === sessionId);
+      state.cwc.splice(indexCWC, 1);
+
+      state.currentSessionId = null;
+    }
+  },
 
   //CUSTOMER
   setCustomerData(state, payload) {
@@ -160,6 +193,7 @@ export default {
     state.queuesCall = [];
     state.chatMessages = {};
     state.customerData = [];
-    state.cwc = {};
+    state.cwc = [];
+    state.currentSessionId = null;
   },
 };

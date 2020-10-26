@@ -31,4 +31,7 @@ export default {
   URL_UPDATE_CUSTOMER() {
     return `${baseUrl}/customer/update`;
   },
+  URL_SUBMIT_CWC() {
+    return `${baseUrl}/interaction/submitCWC`;
+  },
 };

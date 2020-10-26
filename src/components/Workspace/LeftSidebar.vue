@@ -12,10 +12,9 @@
             v-model="isAux"
           />
           <label class="custom-control-label" for="switch-aux">{{
-            isAux ? "Play" : "Pause "
+            labelAux
           }}</label>
         </div>
-        <!-- <button :class="['btn', isAux ? 'btn-success':'btn-primary']" @click="toggleAux">{{ isAux ? "Play" : "Pause" }}</button> -->
       </header>
       <div class="tab">
         <tab-header
@@ -32,8 +31,6 @@
           :is="currentTabComponent"
           class="tab"
           :queues="queues[currentTab]"
-          :currentSessionId="currentSessionId"
-          @set-session-id="setSessionId"
         ></component>
       </keep-alive>
     </div>
@@ -43,68 +40,58 @@
 
 <script>
 import TabHeader from "./TabHeader";
-
 import QueueChat from "./Queue/Chat/QueueChat";
 import QueueCall from "./Queue/Call/QueueCall";
 import QueueVideo from "./Queue/Video/QueueVideo";
-
+// import sound from "../../assets/sound/notification-chat.mp3";
 export default {
-  props: {
-    tabs: {
-      type: Array
-    },
-    currentTab: {
-      type: String
-    },
-    queues: {
-      type: Object
-    },
-    currentSessionId: {
-      type: String
-    }
+  data() {
+    return {
+      tabs: ["chat", "call", "video"],
+      currentTab: "chat",
+    };
   },
   components: {
     "tab-header": TabHeader,
     "queue-chat": QueueChat,
     "queue-call": QueueCall,
-    "queue-video": QueueVideo
+    "queue-video": QueueVideo,
   },
   computed: {
     currentTabComponent() {
       return "queue-" + this.currentTab;
     },
+    queues() {
+      return {
+        chat: this.$store.getters["workspace/queuesChat"],
+        call: this.$store.getters["workspace/queuesCall"],
+        video: this.$store.getters["workspace/queuesVideo"],
+      };
+    },
     isAux: {
-      get: function() {
+      get: function () {
         return !this.$store.getters["auth/isAux"];
       },
-      set: async function() {
-        console.log(
-          'this.$store.getters["auth/isAux"]',
-          this.$store.getters["auth/isAux"]
-        );
+      set: async function () {
         const auxStatus = !this.$store.getters["auth/isAux"];
-        console.log("auxStatus", auxStatus);
         await this.$store.dispatch("auth/updateAux", {
-          auxStatus
+          auxStatus,
         });
-      }
-    }
-    // isAux(hai) {
-
-    //   console.log(hai);
-    //   return this.$store.getters["auth/isAux"];
-    // }
+      },
+    },
+    labelAux() {
+      return this.isAux ? "Play" : "Pause ";
+    },
   },
   methods: {
     setActiveTab(tab) {
-      // this.currentTab = tab;
-      this.$emit("set-active-tab", tab);
+      this.currentTab = tab;
+      this.$store.dispatch("workspace/getQueues", tab);
     },
-    setSessionId(sessionId) {
-      // this.currentSessionId = sessionId;
-      this.$emit("set-session-id", sessionId);
-    }
-  }
+  },
+  mounted() {
+    this.setActiveTab("chat");
+  },
 };
 </script>
 
