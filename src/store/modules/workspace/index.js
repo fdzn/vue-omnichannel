@@ -15,6 +15,8 @@ export default {
       queuesVideo: [],
       queuesCall: [],
       chatMessages: {},
+      customerData: [],
+      cwc: [],
     };
   },
   mutations,

@@ -9,7 +9,7 @@
       @set-session-id="setSessionId"
     ></left-sidebar>
     <router-view :key="$route.path" />
-    <the-cwc v-if="currentSessionId"></the-cwc>
+    <the-cwc v-if="currentSessionId" :currentSessionId="currentSessionId"></the-cwc>
   </div>
 </template>
 

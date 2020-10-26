@@ -41,5 +41,30 @@ export default {
     // found = state.queuesVideo.filter((queue) => queue.sessionId === sessionId)
     // found = state.queuesCall.filter((queue) => queue.sessionId === sessionId)
     // return found;
-  }
+  },
+
+  queuesBySessionId: (state) => (sessionId) => {
+    let found = state.queuesChat.find((x) => x.sessionId === sessionId);
+    if (found) {
+      return found;
+    } else {
+      found = state.queuesCall.find((x) => x.sessionId === sessionId);
+      if (found) {
+        return found;
+      } else {
+        found = state.queuesVideo.find((x) => x.sessionId === sessionId);
+        if (found) {
+          return found;
+        }
+      }
+    }
+  },
+
+  customerById: (state) => (customerId) => {
+    return state.customerData.find((x) => x.id === customerId);
+  },
+  contactByCustomerId: (state) => (customerId) => {
+    const data = state.customerData.find((x) => x.id === customerId);
+    return data.contact;
+  },
 };
