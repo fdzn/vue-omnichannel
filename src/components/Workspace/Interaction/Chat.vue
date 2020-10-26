@@ -92,10 +92,11 @@ export default {
   data() {
     return {
       message: "",
+      type: "chat",
     };
   },
   mounted() {
-    this.$store.dispatch("workspace/getInteraction", this);
+    this.$store.dispatch("workspace/getData", this);
   },
   computed: {
     chatMessages() {

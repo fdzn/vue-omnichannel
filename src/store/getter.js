@@ -22,4 +22,13 @@ export default {
   URL_UPDATE_AUX() {
     return `${baseUrl}/autoin/updateAux`;
   },
+  URL_GET_CUSTOMER_DATA: () => (custId) => {
+    return `${baseUrl}/customer/${custId}`;
+  },
+  URL_UPDATE_CONTACT() {
+    return `${baseUrl}/customer/updateContact`;
+  },
+  URL_UPDATE_CUSTOMER() {
+    return `${baseUrl}/customer/update`;
+  },
 };

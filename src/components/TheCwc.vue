@@ -3,7 +3,7 @@
     <!-- Chats sidebar -->
     <div
       class="sidebar active w-300"
-      style="border-radius: 0px; margin-left: 1px;"
+      style="border-radius: 0px; margin-left: 1px"
     >
       <header class="bg-white">
         <h6 class="header-title">Customer Information</h6>
@@ -48,7 +48,9 @@
                     <h6 class="text-grey font12 font-normal">Cust ID</h6>
                   </div>
                   <div class="col-sm-8">
-                    <h6 class="text-black font12 ml-2">023232022</h6>
+                    <h6 class="text-black font12 ml-2">
+                      {{ detailQueue.customerId }}
+                    </h6>
                   </div>
                 </div>
                 <div class="row">
@@ -59,7 +61,9 @@
                     <input
                       type="text"
                       class="form-control no-border font12"
-                      value="Nada Fadhilah Fitriyani"
+                      :value="formCustomer.name"
+                      name="name"
+                      @keyup.enter="editCustomer"
                     />
                     <i class="pencil_2_icon pencil_input"></i>
                   </div>
@@ -72,7 +76,8 @@
                     <input
                       type="text"
                       class="form-control no-border font12"
-                      value="Priority"
+                      :value="formCustomer.isPriority"
+                      @keyup.enter="editCustomer"
                     />
                     <i class="pencil_2_icon pencil_input"></i>
                   </div>
@@ -85,20 +90,8 @@
                     <input
                       type="text"
                       class="form-control no-border font12"
-                      value="Jl. Gotong Royong"
-                    />
-                    <i class="pencil_2_icon pencil_input"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <h6 class="text-grey font12 font-normal pt-2">Email</h6>
-                  </div>
-                  <div class="col-sm-8">
-                    <input
-                      type="text"
-                      class="form-control no-border font12"
-                      value="nadaff@gmail.com"
+                      :value="formCustomer.address"
+                      @keyup.enter="editCustomer"
                     />
                     <i class="pencil_2_icon pencil_input"></i>
                   </div>
@@ -111,33 +104,29 @@
                     <input
                       type="text"
                       class="form-control no-border font12"
-                      value="-"
+                      :value="formCustomer.company"
+                      @keyup.enter="editCustomer"
                     />
                     <i class="pencil_2_icon pencil_input"></i>
                   </div>
                 </div>
-                <div class="row">
+                <div
+                  class="row"
+                  :key="contact.id"
+                  v-for="contact in formContact"
+                >
                   <div class="col-sm-4">
-                    <h6 class="text-grey font12 font-normal pt-2">HP</h6>
+                    <h6 class="text-grey font12 font-normal pt-2">
+                      {{ contact.type }}
+                    </h6>
                   </div>
                   <div class="col-sm-8">
                     <input
                       type="text"
                       class="form-control no-border font12"
-                      value="(+62) 85 899 125 810"
-                    />
-                    <i class="pencil_2_icon pencil_input"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <h6 class="text-grey font12 font-normal pt-2">Phone</h6>
-                  </div>
-                  <div class="col-sm-8">
-                    <input
-                      type="text"
-                      class="form-control no-border font12"
-                      value="(021) 847484"
+                      :value="contact.value"
+                      :data-id="contact.id"
+                      @keyup.enter="editContact"
                     />
                     <i class="pencil_2_icon pencil_input"></i>
                   </div>
@@ -185,7 +174,7 @@
                     <a
                       href="#"
                       class="pencil_input text-blue-1 font-weight-bold"
-                      style="margin-left: 11.5em;"
+                      style="margin-left: 11.5em"
                       >Select</a
                     >
                   </div>
@@ -278,7 +267,7 @@
                   <div class="red-line"></div>
                   <div
                     class="list-item-wrapper"
-                    style="margin-top: 0px !important;"
+                    style="margin-top: 0px !important"
                   >
                     <div class="list-bullet pd-5">
                       <i class="small_chat_icon"></i>
@@ -325,3 +314,63 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    currentSessionId: {
+      type: String,
+    },
+  },
+  computed: {
+    formCustomer() {
+      const data = this.$store.getters["workspace/queuesBySessionId"](
+        this.currentSessionId
+      );
+      return this.$store.getters["workspace/customerById"](data.customerId);
+    },
+    formContact() {
+      const data = this.$store.getters["workspace/queuesBySessionId"](
+        this.currentSessionId
+      );
+      return this.$store.getters["workspace/contactByCustomerId"](
+        data.customerId
+      );
+    },
+    detailQueue() {
+      return this.$store.getters["workspace/queuesBySessionId"](
+        this.currentSessionId
+      );
+    },
+  },
+  methods: {
+    editCustomer(e) {
+      const key = e.target.name;
+      const value = e.target.value;
+      const oldValue = this.formCustomer[key];
+      if (oldValue !== value) {
+        const payload = {
+          customerId: this.detailQueue.customerId,
+          key: key,
+          value: value,
+        };
+        this.$store.dispatch("workspace/updateCustomer", payload);
+      }
+    },
+    editContact(e) {
+      const idContact = Number(e.target.dataset.id);
+      const value = e.target.value;
+
+      const oldData = this.formContact.find((x) => x.id === idContact);
+      if (oldData.value !== value) {
+        const payload = {
+          customerId: this.detailQueue.customerId,
+          idContact: idContact,
+          value: value,
+        };
+        this.$store.dispatch("workspace/updateContact", payload);
+      }
+    },
+  },
+};
+</script>

@@ -1,7 +1,8 @@
 // import Vue from "vue";
 
 export default {
-  initialQueues(state, payload) {
+  //QUEUES
+  setQueues(state, payload) {
     let arrayChat = [];
     let arrayCall = [];
     let arrayVideo = [];
@@ -11,6 +12,7 @@ export default {
         case "whatsapp":
           arrayChat.push({
             sessionId: row.sessionId,
+            customerId: row.customerId,
             name: row.fromName ? row.fromName : row.from,
             isPriority: Boolean(row.priority),
             lastMessageTime: row.lastChat.sendDate,
@@ -21,26 +23,17 @@ export default {
         default:
           break;
       }
-      state.queuesChat = arrayChat;
-      state.queuesVideo = arrayCall;
-      state.queuesCall = arrayVideo;
     }
-    const data = payload.map((row) => {
-      return {
-        sessionId: row.sessionId,
-        name: row.fromName ? row.fromName : row.from,
-        isPriority: Boolean(row.priority),
-        lastMessageTime: row.lastChat.sendDate,
-        lastMessage: row.lastChat.message,
-      };
-    });
-    state.queuesChat = data;
+    state.queuesChat = arrayChat;
+    state.queuesVideo = arrayCall;
+    state.queuesCall = arrayVideo;
   },
   addQueues(state, payload) {
     switch (payload.channelId) {
       case "whatsapp":
         state.queuesChat.push({
           sessionId: payload.sessionId,
+          customerId: payload.customerId,
           name: payload.fromName ? payload.fromName : payload.from,
           isPriority: Boolean(payload.priority),
           lastMessageTime: payload.lastChat.sendDate,
@@ -52,7 +45,6 @@ export default {
         break;
     }
   },
-
   updateQueuesByLastMessage(state, payload) {
     const { sessionId } = payload;
     const index = state.queuesChat.findIndex((x) => x.sessionId === sessionId);
@@ -83,7 +75,8 @@ export default {
     state.jumQueue = data;
   },
 
-  initialChatMessage(state, payload) {
+  //CHATS
+  setChatMessage(state, payload) {
     const data = payload.map((row) => {
       return {
         id: row.id,
@@ -105,7 +98,6 @@ export default {
     newObject[sessionId] = data;
     state.chatMessages = { ...state.chatMessages, ...newObject };
   },
-
   addChatMessage(state, payload) {
     const data = {
       id: payload.id,
@@ -122,7 +114,6 @@ export default {
     };
     state.chatMessages[payload.sessionId].push(data);
   },
-
   updateChatMessage(state, payload) {
     const { sessionId, id } = payload;
     const index = state.chatMessages[sessionId].findIndex((x) => x.id === id);
@@ -130,6 +121,36 @@ export default {
     state.chatMessages[sessionId][index].sendStatus = payload.sendStatus;
     state.chatMessages[sessionId][index].systemMessage = payload.systemMessage;
   },
+
+  //CUSTOMER
+  setCustomerData(state, payload) {
+    const { id } = payload;
+    const index = state.customerData.findIndex((x) => x.id === id);
+    if (index < 0) {
+      state.customerData.push(payload);
+    } else {
+      state.customerData[index] = payload;
+    }
+  },
+  updateCustomerData(state, payload) {
+    const { customerId, key, value } = payload;
+    const indexCustomer = state.customerData.findIndex(
+      (x) => x.id === customerId
+    );
+    state.customerData[indexCustomer][key] = value;
+  },
+  updateContactData(state, payload) {
+    const { customerId, idContact, value } = payload;
+    const indexCustomer = state.customerData.findIndex(
+      (x) => x.id === customerId
+    );
+    const indexContact = state.customerData[indexCustomer].contact.findIndex(
+      (x) => x.id === idContact
+    );
+    state.customerData[indexCustomer].contact[indexContact].value = value;
+  },
+
+  //RESET
   resetState(state) {
     state.jumQueue.chat = 0;
     state.jumQueue.call = 0;
@@ -138,5 +159,7 @@ export default {
     state.queuesVideo = [];
     state.queuesCall = [];
     state.chatMessages = {};
+    state.customerData = [];
+    state.cwc = {};
   },
 };
