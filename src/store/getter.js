@@ -34,4 +34,7 @@ export default {
   URL_SUBMIT_CWC() {
     return `${baseUrl}/interaction/submitCWC`;
   },
+  URL_GET_DASHBOARD_AGENT() {
+    return `${baseUrl}/report/getDashboardSummaryAgent`;
+  },
 };

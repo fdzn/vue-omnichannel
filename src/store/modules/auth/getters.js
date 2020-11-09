@@ -1,8 +1,12 @@
 export default {
+  getState: (state) => (type) => {
+    return state[type];
+  },
+  
   username(state) {
     return state.username;
   },
-  
+
   isAux(state) {
     return state.isAux;
   },

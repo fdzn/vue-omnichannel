@@ -8,9 +8,9 @@
           </router-link>
         </li>
         <li>
-          <a data-navigation-target="#" href="#">
-            <i class="signal_1_icon"></i>
-          </a>
+          <router-link :to="{ name: 'Dashboard' }">
+            <i class="signal_icon"></i>
+          </router-link>
         </li>
         <li>
           <router-link :to="{ name: 'Workspace' }">
@@ -39,7 +39,7 @@ export default {
   methods: {
     async logout() {
       await this.$store.dispatch("auth/logout");
-      location.reload('/')
+      location.reload("/");
     },
   },
 };

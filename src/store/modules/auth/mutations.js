@@ -1,12 +1,13 @@
 export default {
   setUser(state, payload) {
-    if(payload.isAux === "true"){
-      payload.isAux = true
+    if (payload.isAux === "true") {
+      payload.isAux = true;
     }
-    if(payload.isAux === "false"){
-      payload.isAux = false
+    if (payload.isAux === "false") {
+      payload.isAux = false;
     }
     state.username = payload.username;
+    state.name = payload.name;
     state.isAux = payload.isAux;
     state.level = payload.level;
     state.unitId = payload.unitId;
@@ -18,7 +19,7 @@ export default {
   },
 
   updateAux(state, payload) {
-    state.isAux = payload
+    state.isAux = payload;
   },
 
   resetState(state) {

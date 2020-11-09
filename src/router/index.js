@@ -3,18 +3,19 @@ import VueRouter from "vue-router";
 import store from "../store";
 import socketIO from "socket.io-client";
 import VueSocketIO from "vue-socket.io";
-import { BootstrapVue } from 'bootstrap-vue'
+import { BootstrapVue } from "bootstrap-vue";
 
 // Component
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Workspace from "../views/Workspace.vue";
+import Dashboard from "../views/Dashboard.vue";
 import InteractionChat from "../components/Workspace/Interaction/Chat.vue";
 
 Vue.use(VueRouter);
 
 // Install BootstrapVue
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 
 const routes = [
   {
@@ -59,6 +60,12 @@ const routes = [
           },
         ],
       },
+      {
+        path: "dashboard",
+        name: "Dashboard",
+        component: Dashboard,
+        meta: { requiresAuth: true },
+      },
     ],
   },
   {
@@ -76,7 +83,7 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach(function (to, from, next) {
+router.beforeEach(function(to, from, next) {
   if (to.meta.requiresAuth && !store.getters["auth/isLogin"]) {
     next("/login");
   } else if (to.meta.requiresUnauth && store.getters["auth/isLogin"]) {
