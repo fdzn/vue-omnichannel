@@ -497,7 +497,7 @@ a.bg-cyan:focus, a.bg-cyan:hover, button.bg-cyan:focus, button.bg-cyan:hover {
 
 .tab {
     overflow: hidden;
-    background-color: #F8F8F8;
+    background-color: #fff;
     margin: 6px 14px;
     border-radius: 4px;
     color: #787878;
