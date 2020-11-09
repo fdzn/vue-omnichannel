@@ -20,7 +20,7 @@ export default {
   watch: {
     isLogin(curValue) {
       if(curValue){
-        this.$router.replace("/");
+        this.$router.replace("/dashboard");
       }else{
         this.$router.replace("/login");
       }
